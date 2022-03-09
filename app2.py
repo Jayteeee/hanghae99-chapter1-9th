@@ -67,7 +67,7 @@ def sign_in():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-@app.route('/sign_in/index3.html')
+@app.route('/index3.html')
 def index3():
     return render_template('index3.html')
 
@@ -97,14 +97,13 @@ def review_post():
 
     }
     db.project01.insert_one(doc)
-
     return jsonify({'msg': '등록 완료!'})
 
 
 @app.route("/project01", methods=["GET"])
 def project01_get():
-    project01_list = list(db.projects01.find({}, {'_id': False}))
-    return jsonify({'projects01': project01_list})
+    project01_list = list(db.project01.find({}, {'_id': False}))
+    return jsonify({'project01': project01_list})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
