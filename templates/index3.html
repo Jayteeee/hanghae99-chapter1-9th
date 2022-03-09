@@ -55,58 +55,37 @@
     </style>
     <script>
         $(document).ready(function () {
-            show_project01();
+            show_bucket();
         });
 
-        function show_project01() {
+        function show_bucket() {
             $.ajax({
                 type: "GET",
-                url: "/project01",
+                url: "/bucket",
                 data: {},
                 success: function (response) {
-                    let rows = response['projects01']
-                    for (let i = 0; i < rows.length; i++) {
-                        let name = rows[i]['name']
-                        let address = rows[i]['address']
-                        let menu = rows[i]['menu']
-                        let comment = rows[i]['comment']
-                        let star = rows[i]['star']
-                        let image = rows[i]['image']
-
-                        let temp_html = `<div class="card" style="width: 18rem;">
-                                            <img src="${image}"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${name}</h5>
-                                                <p class="card-text">${menu}</p>
-                                                <p class="card-text">${star}</p>
-                                                <p class="card-text">${comment}</p>
-                                                <p class="card-text">${address}</p>
-                                            </div>
-                                        </div>`
-                        $("#cards-box").append(temp_html)
-                    }
+                    alert(response["msg"])
                 }
             });
         }
 
-        // function save_project01() {
-        //     let name = $('#name').val()
-        //     let address = $('#address').val()
-        //     let menu = $('#menu').val()
-        //     let comment = $('#comment').val()
-        //     let star = $('#star').val()
-        //
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/project01",
-        //         data: {name_give: name, address_give: address, menu_give: menu, comment_give: comment, star_give: star},
-        //         success: function (response) {
-        //             alert(response["msg"])
-        //             window.location.reload()
-        //         }
-        //     });
-        // }
+        function save_project01() {
+            let name = $('#name').val()
+            let address = $('#address').val()
+            let menu = $('#menu').val()
+            let comment = $('#comment').val()
+            let star = $('#star').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/project01",
+                data: {name_give: name, address_give: address, menu_give: menu, comment_give: comment, star_give: star},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
 
         function done_bucket(num) {
             $.ajax({
@@ -133,7 +112,7 @@
         <i class="fas fa-microphone"></i>
         <!--    아이콘삽입예정-->
         <button>검색</button>
-        <button><a href="index4.html" target="_blank">등록하기</a></button>
+        <button><a href="index2.html" target="_blank">등록하기</a></button>
     </div>
     <h2 style="margin: 20px auto; width: 180px; height: 40px">Best 빵집</h2>
     <div class="mytitle">
@@ -163,8 +142,6 @@
                 <p class="card-text">⭐⭐⭐⭐</p>
                 <a href="#" class="btn btn-primary">상세정보 확인하기</a>
             </div>
-        </div>
-        <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
         </div>
     </div>
 </div>
