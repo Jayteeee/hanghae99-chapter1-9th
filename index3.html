@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <title>동네빵집(Main></title>
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        .mytitle {
+            /*background-color: green;*/
+            width: 1000px;
+            height: 500px;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search {
+            position: relative;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .fa-search {
+            position: absolute;
+            left: 15px;
+            top: 22px;
+            margin: 0;
+        }
+        .cover1 {
+            width: 100%;
+            height: 1000px;
+            background-color: blanchedalmond;
+        }
+        .card {
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            show_project01();
+        });
+
+        function show_project01() {
+            $.ajax({
+                type: "GET",
+                url: "/project01",
+                data: {},
+                success: function (response) {
+                    let rows = response['project01']
+                    for (let i = 0; i < rows.length; i++) {
+                        let localname = rows[i]['localname']
+                        let address = rows[i]['address']
+                        let menu = rows[i]['menu']
+                        let store = rows[i]['store']
+                        let image = rows[i]['image']
+                        let star = rows[i]['star']
+
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                            <img src="${image}"
+                                                 class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${localname}</h5>
+                                                <p class="card-text">${star}</p>
+                                            </div>
+                                        </div>`
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            });
+        }
+
+        function save_project01() {
+            let localname = $('#localname').val()
+            let address = $('#address').val()
+            let menu = $('#menu').val()
+            let comment = $('#comment').val()
+            let star = $('#star').val()
+            let image = $('#image').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/project01",
+                data: {name_give: name, address_give: address, menu_give: menu, comment_give: comment, star_give: star},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
+        // function done_bucket(num) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/bucket/done",
+        //         data: {sameple_give: '데이터전송'},
+        //         success: function (response) {
+        //             alert(response["msg"])
+        //         }
+        //     });
+        // }
+    </script>
+</head>
+<body>
+<div class="cover1">
+    <h1 style="width: 190px; height: 60px; margin: 20px auto; color: #40E0D0;">동네빵집</h1>
+    <button style="position: fixed; top: 20px; left: 1280px; right: 0; width: 100px; background-color: #40E0D0; border-radius: 19px; border-color: transparent; color: #fff !important;">
+        Logout
+    </button>
+    <div class="search">
+        <i class="fas fa-search"></i>
+        <input type="text">
+        <i class="fas fa-keyboard"></i>
+        <i class="fas fa-microphone"></i>
+        <!--    아이콘삽입예정-->
+        <button>검색</button>
+        <button><a href="index4.html" target="_blank">등록하기</a></button>
+    </div>
+    <h2 style="margin: 20px auto; width: 180px; height: 40px">Best 빵집</h2>
+    <div class="mytitle">
+        <div class="card" style="width: 18rem;">
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA5MDhfOTQg%2FMDAxNTY3OTQ2OTU2MTA2.-L82tyexg_Fo0TtoZ_68yI-N6OUsCDmM6wvqX5of228g.Iqw5DZiv6rTBV88IPsMTFJ_Pmq-RMzR05qlmBCzaWzkg.JPEG.dddowny%2FIMG_1470.jpg&type=sc960_832"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">빅토리아 베이커리</h5>
+                <p class="card-text">⭐⭐⭐⭐</p>
+                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAxMjdfODkg%2FMDAxNTgwMTAzMTk1NTIw.6Nfi6txn0ZRaGMG3_OJuCkoXqhDHlgASE0jlcnSeAe8g.r7YDLbqqdbdBeFhNpTYxZ5j1LLUJ4HKjnHqHDsUP_Xsg.JPEG.skrhdwn2496%2FIMG_2174.jpg&type=sc960_832"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">맘마미아</h5>
+                <p class="card-text">⭐⭐⭐⭐</p>
+                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
+                 class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">어글리 베이커리</h5>
+                <p class="card-text">⭐⭐⭐⭐</p>
+                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+            </div>
+        </div>
+    </div>
+    <div id="cards-box">
+
+    </div>
+</div>
+</div>
+</body>
+</html>
