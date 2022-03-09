@@ -114,13 +114,13 @@ def project01_get():
 # index_sub로 연결하면서 mnt_no 데이터를 전송
 @app.route('/index5/<store_num>', methods=['GET'])
 def index5(store_num):
-    return render_template('index5.html', store_num = store_num)
+    num = db.project01.find_one({'num': int(store_num)}, {'_id': False})
+    return render_template('index5.html', num = num, store_num = store_num)
 
-@app.route("/review_show", methods=["GET"])
-def show_review():
-    num_receive = request.args.get('num')
-    num = db.project01.find_one({'num': int(num_receive)}, {'_id': False})
-    return jsonify({'num': num})
+# @app.route("/review_show", methods=["GET"])
+# def show_review(store_num):
+#     num = db.project01.find_one({'num': int(store_num)}, {'_id': False})
+#     return jsonify({'num': num})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

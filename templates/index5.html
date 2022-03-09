@@ -46,24 +46,22 @@
         function init_page() {
             $.ajax({
                 type: "GET",
-                url: "/review_show/"+'{{store_num}}', // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
+                url: "/index5/{{store_num}}", // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
                 data: {},
                 success: function(response){
-                    let num = response['num']
-
-                        document.getElementById("store").innerHTML=num['store']
-                        document.getElementById("menu").innerHTML=num['menu']
-                        document.getElementById("localname").innerHTML=num['localname']
-                        document.getElementById("star").innerHTML=num['star']
-                        document.getElementById("comment").innerHTML=num['comment']
-
-                    let star_image = '⭐'.repeat(star)
+                    let rows = response['num']
+                    for (let i = 0; i < rows.length; i++) {
+                        let store = rows[i]['store']
+                        let star = rows[i]['star']
+                        let image = rows[i]['image']
+                        let star_image = '⭐'.repeat(star)
+                        let num = rows[i]['num']
 
                         let temp_html=`<h1>동네빵집</h1>
                                             <div id="store">${store}</div>
                                             <div id="id">작성자</div>
                                         <div class="card mb-3, image-box">
-                                            <img src="#" id="image"
+                                            <img src="${image}" id="image"
                                                  class="card-img-top" alt="bread">
                                         </div>
                                         <div class="card-body">
@@ -72,7 +70,8 @@
                                             <p class="card-text">${comment}</p>
                                         </div>`
                         $('#review_list').append(temp_html)
-                    }
+                    console.log(temp_html)
+                }
 
                 }
             })
