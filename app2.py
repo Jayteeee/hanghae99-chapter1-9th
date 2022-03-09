@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 import certifi
+
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
@@ -13,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@cluster0.xzxzt.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.3jj7o.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
 @app.route('/')
@@ -85,8 +86,12 @@ def review_post():
     comment_receive = request.form['comment_give']
     image_receive = request.form['image_give']
 
+    review_list = list(db.project01.find({}, {'_id': False}))
+    count = len(review_list) + 1
+
 
     doc = {
+        'num':count,
         'store':store_receive,
         'menu':menu_receive,
         'localname': localname_receive,
@@ -103,8 +108,19 @@ def review_post():
 
 @app.route("/project01", methods=["GET"])
 def project01_get():
-    project01_list = list(db.projects01.find({}, {'_id': False}))
+    project01_list = list(db.project01.find({}, {'_id': False}))
     return jsonify({'projects01': project01_list})
+
+# index_sub로 연결하면서 mnt_no 데이터를 전송
+@app.route('/index5/<store_num>', methods=['GET'])
+def index5(store_num):
+    return render_template('index5.html', store_num = store_num)
+
+@app.route("/review_show", methods=["GET"])
+def show_review():
+    num_receive = request.args.get('num')
+    num = db.project01.find_one({'num': int(num_receive)}, {'_id': False})
+    return jsonify({'num': num})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

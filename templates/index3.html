@@ -66,26 +66,26 @@
                 success: function (response) {
                     let rows = response['projects01']
                     for (let i = 0; i < rows.length; i++) {
-                        let name = rows[i]['name']
-                        let address = rows[i]['address']
-                        let menu = rows[i]['menu']
-                        let comment = rows[i]['comment']
+                        let store = rows[i]['store']
                         let star = rows[i]['star']
                         let image = rows[i]['image']
+                        let star_image = '⭐'.repeat(star)
+                        let num = rows[i]['num']
 
                         let temp_html = `<div class="card" style="width: 18rem;">
                                             <img src="${image}"
-                                                 class="card-img-top" alt="...">
+                                                 class="card-img-top" id="image" alt="...">
                                             <div class="card-body">
-                                                <h5 class="card-title">${name}</h5>
-                                                <p class="card-text">${menu}</p>
-                                                <p class="card-text">${star}</p>
-                                                <p class="card-text">${comment}</p>
-                                                <p class="card-text">${address}</p>
+                                                <h5 class="card-title">${store}</h5>
+                                                <p class="card-text">${star_image}</p>
+                                                <a href="/index5/${num}" class="btn btn-primary">상세정보 확인하기</a>
                                             </div>
                                         </div>`
+                        $('#image').attr("src",image)
                         $("#cards-box").append(temp_html)
                     }
+
+                    console.log(response['projects01'])
                 }
             });
         }
