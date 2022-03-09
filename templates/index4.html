@@ -7,6 +7,8 @@
     <meta property="og:title" content="항해99 6기 9조"/>
     <meta property="og:description" content="우리동네 빵집"/>
     <meta property="og:image" content="이미지URL주소입력"/>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -14,20 +16,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
 
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd51ea275f11885a15fbe3d5d1d142c4&libraries=services,drawing"></script>
 
-    <title>항해99 6기-9조</title>
+    <title>빵집 등록하기</title>
 
     <style>
         * {
-            font-family: 'Do Hyeon', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            color: #40E0D0;
+        }
+
+        body {
+            background-color: white;
+            text-align: center;
+            min-height: 130vh;
+            font-family: 'Nanum Pen Script', cursive;
+
+        }
+
+        .main-box {
+            position: absolute;
+            top: 63%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .title {
-            text-align: center;
+            font-family: 'Gugi', cursive;
+            margin-top: 60px;
+            color: #40E0D0;
+            font-size: 4rem;
+        }
+
+        .mini-title {
+            font-family: 'Nanum Pen Script', cursive;
+            font-size: 2rem;
+            margin-top: -19px
         }
 
         .wrap {
@@ -56,10 +84,28 @@
         .address_box > button {
             width: 70px;
         }
+
         .address_box > input {
             margin-right: 10px;
             min-width: 500px;
             width: 95%
+        }
+
+        .is-choose {
+            color: white !important;
+            background-color: #40E0D0 !important;
+            border-radius: 19px;
+        }
+
+        .file-choose {
+            width: 570px;
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+
+        .is-complete {
+            background-color: #40E0D0 !important;
+            border-radius: 19px;
         }
 
     </style>
@@ -128,95 +174,164 @@
                 }
             });
         }
+
+        // var sel_file;
+        //
+        // $(document).ready(function () {
+        //     $("#file1").on("change", handleImagFileSelect);
+        // });
+        //
+        // function handleImagFileSelect(e) {
+        //     var files = e.target.files;
+        //     var filesArr = Array.prototype.slice.call(files);
+        //
+        //     var reg = /(.*?)|/(jpg | jpeg | png | bmp)
+        //     $;
+        //
+        //     filesArr.forEach(function (f))
+        //     {
+        //         if (!f.type.match(reg)) {
+        //             alert('확장자는 이미지 확장자만 가능합니다.');
+        //             return;
+        //         }
+        //         sel_file = f;
+        //
+        //         var reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             $('#img').arrt("src", e.target.result);
+        //         }
+        //         reader.readAsDataURL(f);
+        //     }
+        // }
+    </script>
+    <script>
+        function fn_sumbit() {
+
+            var form = new FormData();
+            form.append("file", $("#file1")[0].files[0]);
+
+            $.ajax({
+                url: "/index3.html",
+                type: POST,
+                processData: false,
+                dontentType: false,
+                data: form,
+                success: function (response) {
+                    alert('성공하였습니다.');
+                    console.log(response);
+                }
+                , error: function (jqXHR) {
+                    alert(jqXHR.responseText);
+                }
+            })
+        }
     </script>
 </head>
 <body>
-
+<section class="main-box">
     <h1 class="title">동네빵집</h1>
+    <h1 class="mini-title">일상을 달달하게</h1>
     <div class="wrap">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="store" placeholder="빵집 이름을 입력해주세요">
-            <label for="store">빵집 이름</label>
+            <input class="input" type="text" id="store" placeholder="빵집 이름을 입력해주세요" style="border-radius: 19px;">
+            <label for="store"></label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="menu" placeholder="추천 메뉴를 입력해주세요">
-            <label for="menu">추천 메뉴</label>
-        </div>
-        <div class="select">
-            <select id="localname" class="form-select" aria-label="Default select example">
-                <option selected>서울내 행정구역을 선택해주세요.</option>
-                <option value="강남구">강남구</option>
-                <option value="강동구">강동구</option>
-                <option value="강북구">강북구</option>
-                <option value="강서구">강서구</option>
-                <option value="관악구">관악구</option>
-                <option value="광진구">광진구</option>
-                <option value="구로구">구로구</option>
-                <option value="금천구">금천구</option>
-                <option value="노원구">노원구</option>
-                <option value="도봉구">도봉구</option>
-                <option value="동대문구">동대문구</option>
-                <option value="동작구">동작구</option>
-                <option value="마포구">마포구</option>
-                <option value="서대문구">서대문구</option>
-                <option value="서초구">서초구</option>
-                <option value="성동구">성동구</option>
-                <option value="성북구">성북구</option>
-                <option value="송파구">송파구</option>
-                <option value="양천구">양천구</option>
-                <option value="영등포구">영등포구</option>
-                <option value="용산구">용산구</option>
-                <option value="은평구">은평구</option>
-                <option value="종로구">종로구</option>
-                <option value="중구">중구</option>
-                <option value="중랑구">중랑구</option>
-            </select>
-        </div>
-        <div class="select">
-            <select id="star" class="form-select" aria-label="Default select example">
-                <option selected>당신의 별점은 몇점인가요?</option>
-                <option value="1">⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="5">⭐⭐⭐⭐⭐</option>
-            </select>
-        </div>
-        <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="comment"
-                          style="height: 100px"></textarea>
-            <label for="comment">의견남기기</label>
-        </div>
-        <div class="img-box">
-            <div class="input-group mb-3">
-                <input type="file" class="form-control" id="image">
-                <label class="input-group-text" for="image">업로드하기</label>
-            </div>
-        </div>
-        <div class="box_searchbar">
-            <div class="form-inline my-2 my-lg-0, address_box">
-                <input class="form-control mr-sm-2" type="search" id="address" placeholder="정확한 주소를 입력해주세요"
-                       aria-label="Search">
-                <button onclick="addsearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색
-                </button>
-            </div>
-        </div>
-        <div id="map" style="width:100%;height:350px;"></div>
-        <script>
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = {
-                    // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-            // 지도를 생성합니다
-            var map = new kakao.maps.Map(mapContainer, mapOption);
-
-        </script>
-        <div class="mybtn">
-            <button type="button" class="btn btn-outline-dark" onclick="save_review()">완료 및 전송</button>
+            <input class="input" type="text" id="menu" placeholder="추천 메뉴를 입력해주세요" style="border-radius: 19px;">
+            <label for="menu"></label>
         </div>
     </div>
+    <div class="field has-addons" style="width: 570px; margin-left: 15px;">
+        <div class="control is-expanded">
+            <div class="select is-fullwidth">
+                <select id="localname" aria-label="Default select example" style="border-radius: 19px 0px 0px 19px;">
+                    <option selected>서울내 행정구역을 선택해주세요.</option>
+                    <option value="강남구">강남구</option>
+                    <option value="강동구">강동구</option>
+                    <option value="강북구">강북구</option>
+                    <option value="강서구">강서구</option>
+                    <option value="관악구">관악구</option>
+                    <option value="광진구">광진구</option>
+                    <option value="구로구">구로구</option>
+                    <option value="금천구">금천구</option>
+                    <option value="노원구">노원구</option>
+                    <option value="도봉구">도봉구</option>
+                    <option value="동대문구">동대문구</option>
+                    <option value="동작구">동작구</option>
+                    <option value="마포구">마포구</option>
+                    <option value="서대문구">서대문구</option>
+                    <option value="서초구">서초구</option>
+                    <option value="성동구">성동구</option>
+                    <option value="성북구">성북구</option>
+                    <option value="송파구">송파구</option>
+                    <option value="양천구">양천구</option>
+                    <option value="영등포구">영등포구</option>
+                    <option value="용산구">용산구</option>
+                    <option value="은평구">은평구</option>
+                    <option value="종로구">종로구</option>
+                    <option value="중구">중구</option>
+                    <option value="중랑구">중랑구</option>
+                </select>
+            </div>
+        </div>
+        <div class="control">
+            <button class="button is-primary is-choose" type="submit">선택</button>
+        </div>
+    </div>
+    <div class="field has-addons" style="width: 570px; margin-left: 15px">
+        <div class="control is-expanded">
+            <div class="select is-fullwidth">
+                <select id="star" aria-label="Default select example" style="border-radius: 19px 0px 0px 19px;">
+                    <option selected>당신의 별점은 몇점인가요?</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐&nbsp;&nbsp;⭐</option>
+                    <option value="3">⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐</option>
+                    <option value="4">⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐</option>
+                    <option value="5">⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐&nbsp;&nbsp;⭐</option>
+                </select>
+            </div>
+        </div>
+        <div class="control">
+            <button class="button is-primary is-button is-choose" type="submit">선택</button>
+        </div>
+    </div>
+    <div class="form-floating" style="width: 570px; margin-left: 15px; ">
+                <textarea class="textarea" type="text" id="comment" placeholder="의견남기기"
+                          style="height: 100px; border-radius: 19px;"></textarea>
+        <label for="comment"></label>
+    </div>
 
+    <div class="file-choose">
+        <div class="input-group mb-3" style="margin-top: 15px;">
+            <input type="file" class="form-control" id="image" style="border-radius: 19px 0px 0px 19px;">
+            <label class="input-group-text" for="image" style="border-radius: 0px 19px 19px 0px;"></label>
+        </div>
+    </div>
+    <hr style="color: gray;">
+    <div class="box_searchbar" style="padding: 10px">
+        <div class="form-inline my-2 my-lg-0, address_box ">
+            <input class="form-control mr-sm-2 " type="search" id="address" placeholder="정확한 주소를 입력해주세요"
+                   aria-label="Search" style="border-radius: 19px">
+            <button onclick="addsearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit"
+                    style="border-radius: 19px; background-color: #40E0D0; color: white; border-color: #40E0D0">검색
+            </button>
+        </div>
+    </div>
+    <div id="map" style="width:100%;height:350px;"></div>
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+        // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
 
+    </script>
+    <div class="mybtn">
+        <button class="button is-primary is-complete" type="button" onclick="save_review()">완료 및 전송</button>
+    </div>
+    </div>
+</section>
 </body>
 </html>
