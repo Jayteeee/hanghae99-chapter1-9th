@@ -87,32 +87,40 @@ def index4():
 
 @app.route("/review", methods=["POST"])
 def review_post():
-    store_receive = request.form['store_give']
-    localname_receive = request.form['localname_give']
-    star_receive = request.form['star_give']
-    address_receive = request.form['address_give']
-    menu_receive = request.form['menu_give']
-    comment_receive = request.form['comment_give']
-    image_receive = request.form['image_give']
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅하기
+        user_info = db.users.find_one({"username": payload["id"]})
+        store_receive = request.form['store_give']
+        localname_receive = request.form['localname_give']
+        star_receive = request.form['star_give']
+        address_receive = request.form['address_give']
+        menu_receive = request.form['menu_give']
+        comment_receive = request.form['comment_give']
+        image_receive = request.form['image_give']
 
-    review_list = list(db.project01.find({}, {'_id': False}))
-    count = len(review_list) + 1
+        review_list = list(db.project01.find({}, {'_id': False}))
+        count = len(review_list) + 1
 
 
-    doc = {
-        'num':count,
-        'store':store_receive,
-        'menu':menu_receive,
-        'localname': localname_receive,
-        'star': star_receive,
-        'comment': comment_receive,
-        'image': image_receive,
-        'address': address_receive
+        doc = {
+            'num':count,
+            'store':store_receive,
+            'menu':menu_receive,
+            'localname': localname_receive,
+            'star': star_receive,
+            'comment': comment_receive,
+            'image': image_receive,
+            'address': address_receive,
+            'username': user_info['username']
 
-    }
-    db.project01.insert_one(doc)
+        }
+        db.project01.insert_one(doc)
 
-    return jsonify({'result':'success','msg': '등록 완료!'})
+        return jsonify({'result':'success','msg': '등록 완료!'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("/"))
 
 
 @app.route("/project01", methods=["GET"])
