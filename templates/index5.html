@@ -46,10 +46,10 @@
         function init_page() {
             $.ajax({
                 type: "GET",
-                url: "/index5/{{store_num}}", // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
+                url: "/index5?num_give="+"{{num}}", // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
                 data: {},
                 success: function(response){
-                    let rows = response['num']
+                    let rows = response['review_list']
                     for (let i = 0; i < rows.length; i++) {
                         let store = rows[i]['store']
                         let star = rows[i]['star']
