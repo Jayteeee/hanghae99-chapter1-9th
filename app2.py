@@ -112,21 +112,16 @@ def project01_get():
     return jsonify({'projects01': project01_list})
 
 # index_sub로 연결하면서 mnt_no 데이터를 전송
-@app.route('/index5?num_give=', methods=['GET'])
-def index5_get():
-    doc = []
-    num_receive = request.args.get('num_give')
-    reviews = list(db.project01.find({},{'_id':False}))
-    for review in reviews :
-        if num_receive == review['num']:
-            doc.append(review)
-    review_list = doc
-    return jsonify({'review_list':review_list})
-
 @app.route('/index5')
 def index5():
     num_receive = request.args.get('num_give')
-    return render_template('index5.html', num=num_receive)
+    return render_template('index5.html', num = num_receive)
+
+@app.route('/index5_show', methods=['GET'])
+def show_index5():
+    num_receive = request.args.get('num_give')
+    reviews = db.project01.find_one({'num':int(num_receive)},{'_id':False})
+    return jsonify({'review_list':reviews})
 
 # @app.route("/review_show", methods=["GET"])
 # def show_review(store_num):

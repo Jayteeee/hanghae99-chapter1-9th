@@ -8,21 +8,75 @@
     <meta property="og:description" content="우리동네 빵집"/>
     <meta property="og:image" content="이미지URL주소입력"/>
 
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+
+    <script src="/path/to/jquery.js"></script>
+    <script src="/path/to/jquery.cookie.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd51ea275f11885a15fbe3d5d1d142c4&libraries=services,drawing"></script>
 
-    <title>항해99 6기-9조</title>
+    <title>Detail | 동네빵집</title>
 
     <style>
         * {
-            font-family: 'Do Hyeon', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            color: #40E0D0;
+        }
+
+        body {
+            background-color: #FFFFF0;
+            text-align: center;
+            min-height: 100vh;
+            font-family: 'Nanum Pen Script', cursive;
+        }
+
+        .mainbox {
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 30px;
+        }
+
+        .mybtn {
+            position: absolute;
+
+        }
+
+        .title {
+            font-family: 'Gugi', cursive;
+            margin-top: 20px;
+            color: #40E0D0;
+            font-size: 4rem;
+        }
+
+        .mytitle {
+            width: 800px;
+            height: 400px;
+            margin: 10px auto 10px auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            margin-right: 15px;
+            padding: 10px;
+            border-radius: 15px;
         }
 
         .wrap {
@@ -36,44 +90,37 @@
 
         }
 
+        #map {
+            width: 90%;
+            height: 800px;
+        }
+
 
     </style>
 
     <script>
         $(document).ready(function () {
             init_page() // 받은 산의 정보를 바탕으로 페이지의 정보를 초기화합니다.
-		})
+        })
+
         function init_page() {
+            // $('#review_list').empty()
             $.ajax({
                 type: "GET",
-                url: "/index5?num_give="+"{{num}}", // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
+                url: "/index5_show?num_give=" + '{{num}}', // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
                 data: {},
-                success: function(response){
+                success: function (response) {
                     let rows = response['review_list']
-                    for (let i = 0; i < rows.length; i++) {
-                        let store = rows[i]['store']
-                        let star = rows[i]['star']
-                        let image = rows[i]['image']
-                        let star_image = '⭐'.repeat(star)
-                        let num = rows[i]['num']
 
-                        let temp_html=`<h1>동네빵집</h1>
-                                            <div id="store">${store}</div>
-                                            <div id="id">작성자</div>
-                                        <div class="card mb-3, image-box">
-                                            <img src="${image}" id="image"
-                                                 class="card-img-top" alt="bread">
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title"> ${star_image}</h5>
-                                            <p class="card-text">${menu}</p>
-                                            <p class="card-text">${comment}</p>
-                                        </div>`
-                        $('#review_list').append(temp_html)
-                    console.log(temp_html)
-                }
+                    document.getElementById("store").innerHTML = rows['store']
+                    document.getElementById("star").innerHTML = '⭐'.repeat(rows['star'])
+                    document.getElementById("id").innerHTML = rows['id']
+                    document.getElementById("image").innerHTML = rows['image']
+                    document.getElementById("menu").innerHTML = rows['menu']
+                    document.getElementById("comment").innerHTML = rows['comment']
 
                 }
+
             })
         }
     </script>
@@ -82,38 +129,48 @@
 </head>
 <body>
 
-    <button class="mybtn" onclick="window.location.href='/sign_in/index3.html'">
-        목록으로 가기
-    </button>
+<button class="mybtn" onclick="window.location.href='/sign_in/index3.html'">
+    목록으로 가기
+</button>
 
-    <div class="wrap" id="review_list">
+<section class="mainbox">
 
-        <h1>동네빵집</h1>
-            <div id="store">빵집 이름</div>
-            <div id="id">작성자</div>
-        <div class="card mb-3, image-box">
-            <img src="#" id="image"
-                 class="card-img-top" alt="bread">
+
+    <h1 class="title" id="store"></h1>
+    <h5 id="star"></h5>
+
+    <div class="wrap mytitle" id="review_list">
+
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-4by3">
+                    <img id="image" src="#" alt="bread">
+                </figure>
+            </div>
         </div>
         <div class="card-body">
-            <h5 class="card-title"> 별점</h5>
-            <p class="card-text">추천 메뉴</p>
-            <p class="card-text">의견</p>
+            <span>추천메뉴: </span> <span class="card-text" id="menu">${menu}</span>
         </div>
 
-        <div id="map" style="width:100%;height:350px;"></div>
-        <script>
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                mapOption = {
-                    // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-            // 지도를 생성합니다
-            var map = new kakao.maps.Map(mapContainer, mapOption);
+        <textarea id="comment" class="textarea is-primary" placeholder="Primary textarea"></textarea>
 
-        </script>
+        <div id="map"></div>
+
+        <div id="id"></div>
+
     </div>
+</section>
 
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+</script>
 
 
 </body>
