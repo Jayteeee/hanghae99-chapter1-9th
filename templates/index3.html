@@ -55,26 +55,45 @@
     </style>
     <script>
         $(document).ready(function () {
-            show_bucket();
+            show_project01();
         });
 
-        function show_bucket() {
+        function show_project01() {
             $.ajax({
                 type: "GET",
-                url: "/bucket",
+                url: "/project01",
                 data: {},
                 success: function (response) {
-                    alert(response["msg"])
+                    let rows = response['project01']
+                    for (let i = 0; i < rows.length; i++) {
+                        let localname = rows[i]['localname']
+                        let address = rows[i]['address']
+                        let menu = rows[i]['menu']
+                        let store = rows[i]['store']
+                        let image = rows[i]['image']
+                        let star = rows[i]['star']
+
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                            <img src="${image}"
+                                                 class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${localname}</h5>
+                                                <p class="card-text">${star}</p>
+                                            </div>
+                                        </div>`
+                        $('#cards-box').append(temp_html)
+                    }
                 }
             });
         }
 
         function save_project01() {
-            let name = $('#name').val()
+            let localname = $('#localname').val()
             let address = $('#address').val()
             let menu = $('#menu').val()
             let comment = $('#comment').val()
             let star = $('#star').val()
+            let image = $('#image').val()
 
             $.ajax({
                 type: "POST",
@@ -87,16 +106,16 @@
             });
         }
 
-        function done_bucket(num) {
-            $.ajax({
-                type: "POST",
-                url: "/bucket/done",
-                data: {sameple_give: '데이터전송'},
-                success: function (response) {
-                    alert(response["msg"])
-                }
-            });
-        }
+        // function done_bucket(num) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/bucket/done",
+        //         data: {sameple_give: '데이터전송'},
+        //         success: function (response) {
+        //             alert(response["msg"])
+        //         }
+        //     });
+        // }
     </script>
 </head>
 <body>
@@ -112,7 +131,7 @@
         <i class="fas fa-microphone"></i>
         <!--    아이콘삽입예정-->
         <button>검색</button>
-        <button><a href="index2.html" target="_blank">등록하기</a></button>
+        <button><a href="index4.html" target="_blank">등록하기</a></button>
     </div>
     <h2 style="margin: 20px auto; width: 180px; height: 40px">Best 빵집</h2>
     <div class="mytitle">
@@ -143,6 +162,9 @@
                 <a href="#" class="btn btn-primary">상세정보 확인하기</a>
             </div>
         </div>
+    </div>
+    <div id="cards-box">
+
     </div>
 </div>
 </div>
