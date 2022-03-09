@@ -3,55 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+<!--    <script src="/path/to/jquery.js"></script>-->
+<!--    <script src="/path/to/jquery.cookie.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
+          rel="stylesheet">
 
-    <title>동네빵집(Main></title>
+    <title>동네빵집(Main)</title>
 
     <style>
         * {
-            font-family: 'Gowun Dodum', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            color: #40E0D0;
+        }
+
+        body {
+            background-color: #FFFFF0;
+            text-align: center;
+            min-height: 100vh;
+            font-family: 'Nanum Pen Script', cursive;
+        }
+
+        .mainbox {
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 30px;
+        }
+
+        .title {
+            font-family: 'Gugi', cursive;
+            margin-top: 60px;
+            color: #40E0D0;
+            font-size: 4rem;
+        }
+
+        .mini-title {
+            font-family: 'Nanum Pen Script', cursive;
+            font-size: 2rem;
+            margin-top: -19px
+        }
+
+        .beststore {
+            margin-top: 5px;
+            padding: 10px 0px 10px 0px;
+            font-family: 'Gamja Flower', cursive;
         }
 
         .mytitle {
             /*background-color: green;*/
-            width: 1000px;
-            height: 500px;
-            margin: auto;
+            width: 800px;
+            height: 400px;
+            margin: 30px auto 50px auto;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: center;
         }
 
-        .search {
-            position: relative;
-            text-align: center;
-            margin: 0 auto;
+        .card {
+            margin-right: 15px;
+            border-radius: 15px;
         }
 
-        .fa-search {
+        .search-box {
+            margin: 50px auto;
+            width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .is-buton {
+            color: white !important;
+            background-color: #40E0D0 !important;
+            border-radius: 19px;
+        }
+
+        .is-buton.is-outlined {
+            color: #40E0D0 !important;
+            background-color: white !important;
+            border-color: #40E0D0 !important;
+            width: 90px;
+            height: 35px;
             position: absolute;
-            left: 15px;
-            top: 22px;
-            margin: 0;
+            margin: 13px 0px 0px 290px;
         }
-        .cover1 {
-            width: 100%;
-            height: 1000px;
-            background-color: blanchedalmond;
-        }
-        .card {
-            margin-right: 10px;
-        }
+
     </style>
     <script>
         $(document).ready(function () {
@@ -73,12 +118,14 @@
                         let image = rows[i]['image']
                         let star = rows[i]['star']
 
+                        let star_image = '⭐'.repeat(star)
+
                         let temp_html = `<div class="card" style="width: 18rem;">
                                             <img src="${image}"
                                                  class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h5 class="card-title">${localname}</h5>
-                                                <p class="card-text">${star}</p>
+                                                <p class="card-text">${star_image}</p>
                                             </div>
                                         </div>`
                         $('#cards-box').append(temp_html)
@@ -106,67 +153,78 @@
             });
         }
 
-        // function done_bucket(num) {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/bucket/done",
-        //         data: {sameple_give: '데이터전송'},
-        //         success: function (response) {
-        //             alert(response["msg"])
-        //         }
-        //     });
-        // }
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
+        }
     </script>
 </head>
 <body>
-<div class="cover1">
-    <h1 style="width: 190px; height: 60px; margin: 20px auto; color: #40E0D0;">동네빵집</h1>
-    <button style="position: fixed; top: 20px; left: 1280px; right: 0; width: 100px; background-color: #40E0D0; border-radius: 19px; border-color: transparent; color: #fff !important;">
-        Logout
-    </button>
-    <div class="search">
-        <i class="fas fa-search"></i>
-        <input type="text">
-        <i class="fas fa-keyboard"></i>
-        <i class="fas fa-microphone"></i>
-        <!--    아이콘삽입예정-->
-        <button>검색</button>
-        <button><a href="index4.html" target="_blank">등록하기</a></button>
+<section class="mainbox">
+    <nav>
+        <a class="button is-primary is-buton is-outlined" aria-label="logout"
+           onclick="sign_out()"> 로그아웃
+        </a>
+    </nav>
+    <h1 class="title">동네빵집</h1>
+    <h1 class="mini-title">일상을 달달하게</h1>
+    <div class="search-box d-flex justify-content-center">
+        {# <i class="fas fa-search"></i>#}
+        {# <input type="text">#}
+        {# <i class="fas fa-keyboard"></i>#}
+        {# <i class="fas fa-microphone"></i>#}
+        {#        <!--    아이콘삽입예정-->#}
+        {#
+        <button class="button is-primary is-outlined is-search">검색</button>
+        #}
+        <input id="input-store" class="form-control" style="margin-right: 0.5rem; width: 10rem" onkeyup="filter()">
+        <button class="button is-primary is-buton" onclick="find_store()"><i class="fa fa-search"></i>검색
+        </button>
+        <a class="button is-primary is-buton" href="index4.html" target="_blank" style="margin-left: 5px">등록하기</a></div>
     </div>
-    <h2 style="margin: 20px auto; width: 180px; height: 40px">Best 빵집</h2>
-    <div class="mytitle">
-        <div class="card" style="width: 18rem;">
+    <h2 class="beststore" style="background-color: #40E0D0; color: white;">Best 빵집</h2>
+    <hr style="color: gray">
+    <div class="mytitle" id="reviews-list">
+        <div class="card" style="width: 13rem;">
             <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA5MDhfOTQg%2FMDAxNTY3OTQ2OTU2MTA2.-L82tyexg_Fo0TtoZ_68yI-N6OUsCDmM6wvqX5of228g.Iqw5DZiv6rTBV88IPsMTFJ_Pmq-RMzR05qlmBCzaWzkg.JPEG.dddowny%2FIMG_1470.jpg&type=sc960_832"
                  class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">빅토리아 베이커리</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+                <h5 class="card-title"
+                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">빅토리아
+                    베이커리</h5>
+                <hr style="color: gray">
+                <p class="card-star" style="letter-spacing: 7px">⭐⭐⭐⭐</p>
+                <a href="#" class="button is-primary is-buton">상세정보</a>
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 13rem;">
             <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAxMjdfODkg%2FMDAxNTgwMTAzMTk1NTIw.6Nfi6txn0ZRaGMG3_OJuCkoXqhDHlgASE0jlcnSeAe8g.r7YDLbqqdbdBeFhNpTYxZ5j1LLUJ4HKjnHqHDsUP_Xsg.JPEG.skrhdwn2496%2FIMG_2174.jpg&type=sc960_832"
                  class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">맘마미아</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+                <h5 class="card-title"
+                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">맘마미아</h5>
+                <hr style="color: gray">
+                <p class="card-text" style="letter-spacing: 7px">⭐⭐⭐⭐</p>
+                <a href="#" class="button is-primary is-buton">상세정보</a>
             </div>
         </div>
-        <div class="card" style="width: 18rem;">
+        <div class="card" style="width: 13rem;">
             <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
                  class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">어글리 베이커리</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
+                <h5 class="card-title"
+                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">어글리
+                    베이커리</h5>
+                <hr style="color: gray">
+                <p class="card-text" style="letter-spacing: 7px">⭐⭐⭐⭐</p>
+                <a href="#" class="button is-primary is-buton">상세정보</a>
             </div>
         </div>
     </div>
     <div id="cards-box">
 
     </div>
-</div>
-</div>
+</section>
 </body>
 </html>
