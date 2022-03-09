@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!--    <script src="/path/to/jquery.js"></script>-->
-    <!--    <script src="/path/to/jquery.cookie.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
 
-    <title>동네빵집(Main></title>
+    <title>Main | 동네빵집</title>
 
     <style>
         * {
@@ -27,18 +32,29 @@
         body {
             background-color: white;
             text-align: center;
-            min-height: 100vh;
-            font-family: 'Nanum Pen Script', cursive;
-
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
 
-        .mainbox {
+        .main-box {
             background-color: white;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border-radius: 30px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .is-buton.is-logout {
+            color: #40E0D0 !important;
+            background-color: white !important;
+            border-color: #40E0D0 !important;
+            left: 47%;
+            transform: translate(-50%, 30%);
+            text-decoration-line: none;
         }
 
         .title {
@@ -57,22 +73,30 @@
         .beststore {
             margin-top: 5px;
             padding: 10px 0px 10px 0px;
+            width: 100%;
+            min-height: 30px;
             font-family: 'Gamja Flower', cursive;
         }
 
         .mytitle {
-            width: 800px;
-            height: 400px;
-            margin: 30px auto 50px auto;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+            margin: 50px auto;
+            max-width: 70rem;
+        }
+
+        .card {
+            border-radius: 19px;
+        }
+
+        .card-title {
+            color: dimgray;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 15px 0px 30px 0px;
+
         }
 
         .search-box {
             margin: 50px auto;
-            width: 500px;
             margin-bottom: 20px;
         }
 
@@ -80,20 +104,6 @@
             color: white !important;
             background-color: #40E0D0 !important;
             border-radius: 19px;
-        }
-
-        .is-buton.is-outlined {
-            color: #40E0D0 !important;
-            background-color: white !important;
-            border-color: #40E0D0 !important;
-            width: 90px;
-            height: 35px;
-            position: absolute;
-            margin: 13px 0px 0px 290px;
-        }
-
-        .card {
-            margin-right: 20px;
         }
 
     </style>
@@ -117,16 +127,16 @@
 
                         let star_image = '⭐'.repeat(star)
 
-                        let temp_html = `<div class="card" style="width: 13rem; margin-left: 15px; border-radius: 19px;">
-                                              <img src="${image}"
-                                                 class="card-img-top" alt="${image}">
+                        let temp_html = `<div class="col">
+                                            <div class="card">
+                                              <img src="${image}" class="card-img-top" alt="...">
                                               <div class="card-body">
-                                                  <h5 class="card-title"
-                                                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${store}</h5>
+                                                  <h5 class="card-title">${store}</h5>
                                                   <hr style="color: gray">
-                                                  <p class="card-text" style="letter-spacing: 7px">${star_image}</p>
-                                                  <a href="/index5?num_give=${num}" class="button is-primary is-buton">상세정보</a>
+                                                  <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
+                                                  <a href="/index5?num_give=${num}" class="button is-primary is-buton" style="text-decoration-line:none;">상세정보</a>
                                               </div>
+                                            </div>
                                          </div>`
                         $("#cards-box").append(temp_html)
                     }
@@ -145,7 +155,13 @@
             $.ajax({
                 type: "POST",
                 url: "/project01",
-                data: {name_give: name, address_give: address, menu_give: menu, comment_give: comment, star_give: star},
+                data: {
+                    name_give: name,
+                    address_give: address,
+                    menu_give: menu,
+                    comment_give: comment,
+                    star_give: star
+                },
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
@@ -186,8 +202,8 @@
                                                       <h5 class="card-title"
                                                         style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${search_store}</h5>
                                                       <hr style="color: gray">
-                                                      <p class="card-text" style="letter-spacing: 7px">${star_image}</p>
-                                                      <a href="#" class="button is-primary is-buton">상세정보</a>
+                                                      <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
+                                                      <a href="href="/index5?num_give=${num}" class="button is-primary is-buton">상세정보</a>
                                                   </div>
                                              </div>`
                             $('#cards-box').append(temp_html)
@@ -212,74 +228,37 @@
                 }
             }
         }
+
+
     </script>
 </head>
 <body>
-<section class="mainbox">
-    <nav>
-        <a class="button is-primary is-buton is-outlined" aria-label="logout"
-           onclick="sign_out()"> 로그아웃
-        </a>
-    </nav>
-    <h1 class="title">동네빵집</h1>
-    <h1 class="mini-title">일상을 달달하게</h1>
-    <div class="search-box d-flex justify-content-center">
-        <!--        {# <i class="fas fa-search"></i>#}-->
-        <!--        {# <input type="text">#}-->
-        <!--        {# <i class="fas fa-keyboard"></i>#}-->
-        <!--        {# <i class="fas fa-microphone"></i>#}-->
-        <!--        {#        &lt;!&ndash;    아이콘삽입예정&ndash;&gt;#}-->
-        <!--        {#-->
-        <!--        <button class="button is-primary is-outlined is-search">검색</button>-->
-        <!--        #}-->
-        <input id="input-store" class="form-control" style="margin-right: 0.5rem; width: 10rem" onkeyup="filter()">
-        <button class="button is-primary is-buton" onclick="find_store()"><i class="fa fa-search"></i>검색
-        </button>
-        <a class="button is-primary is-buton" href="/index4.html" target="_blank" style="margin-left: 5px">등록하기</a>
-    </div>
+<div class="main-box">
+    <div>
+        <nav>
+            <a class="button is-primary is-buton is-outlined" aria-label="logout"
+               onclick="sign_out()"> 로그아웃
+            </a>
+        </nav>
+        <h1 class="title">동네빵집</h1>
+        <h1 class="mini-title">일상을 달달하게</h1>
+        <div class="search-box d-flex justify-content-center">
+            <input id="input-store" class="form-control" style="margin-right: 0.5rem; width: 10rem" onkeyup="filter()">
+            <button class="button is-primary is-buton" onclick="find_store()"><i class="fa fa-search"></i>검색
+            </button>
+            <a class="button is-primary is-buton" href="/index4.html" target="_blank"
+               style="margin-left: 5px; text-decoration-line:none;">등록하기</a>
+        </div>
+
     </div>
     <h2 class="beststore" style="background-color: #40E0D0; color: white;">Best 빵집</h2>
     <hr style="color: gray">
-<!--    <div class="mytitle" id="reviews-list">-->
-<!--        <div class="card" style="width: 13rem;">-->
-<!--            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA5MDhfOTQg%2FMDAxNTY3OTQ2OTU2MTA2.-L82tyexg_Fo0TtoZ_68yI-N6OUsCDmM6wvqX5of228g.Iqw5DZiv6rTBV88IPsMTFJ_Pmq-RMzR05qlmBCzaWzkg.JPEG.dddowny%2FIMG_1470.jpg&type=sc960_832"-->
-<!--                 class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title"-->
-<!--                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">빅토리아-->
-<!--                    베이커리</h5>-->
-<!--                <hr style="color: gray">-->
-<!--                <p class="card-star" style="letter-spacing: 7px">⭐⭐⭐⭐</p>-->
-<!--                <a href="#" class="button is-primary is-buton">상세정보</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card" style="width: 13rem;">-->
-<!--            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAxMjdfODkg%2FMDAxNTgwMTAzMTk1NTIw.6Nfi6txn0ZRaGMG3_OJuCkoXqhDHlgASE0jlcnSeAe8g.r7YDLbqqdbdBeFhNpTYxZ5j1LLUJ4HKjnHqHDsUP_Xsg.JPEG.skrhdwn2496%2FIMG_2174.jpg&type=sc960_832"-->
-<!--                 class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title"-->
-<!--                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">맘마미아</h5>-->
-<!--                <hr style="color: gray">-->
-<!--                <p class="card-text" style="letter-spacing: 7px">⭐⭐⭐⭐</p>-->
-<!--                <a href="#" class="button is-primary is-buton">상세정보</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card" style="width: 13rem;">-->
-<!--            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"-->
-<!--                 class="card-img-top" alt="...">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title"-->
-<!--                    style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">어글리-->
-<!--                    베이커리</h5>-->
-<!--                <hr style="color: gray">-->
-<!--                <p class="card-text" style="letter-spacing: 7px">⭐⭐⭐⭐</p>-->
-<!--                <a href="#" class="button is-primary is-buton">상세정보</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-    <div class="title" id="cards-box">
-
+    <div class="mytitle">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
+        </div>
+        <hr style="color: gray">
     </div>
-</section>
+</div>
+</div>
 </body>
 </html>
