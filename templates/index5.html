@@ -39,12 +39,14 @@
             background-color: #FFFFF0;
             text-align: center;
             min-height: 100vh;
+            height: 100%;
             font-family: 'Nanum Pen Script', cursive;
         }
 
         .mainbox {
             background-color: white;
             position: absolute;
+            height: 90%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -52,7 +54,9 @@
         }
 
         .mybtn {
-            position: absolute;
+            position: fixed;
+            right: 60px;
+            top: 20px;
 
         }
 
@@ -63,36 +67,36 @@
             font-size: 4rem;
         }
 
-        .mytitle {
-            width: 800px;
-            height: 400px;
-            margin: 10px auto 10px auto;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+        #star {
+            margin-bottom: 30px;
         }
 
-        .card {
-            margin-right: 15px;
+        .comment-box {
+            width: 600px;
+        }
+
+        .card-image {
+            width: 300px;
             padding: 10px;
             border-radius: 15px;
         }
 
         .wrap {
+            min-width: 800px;
+            width: 90%;
+            margin: auto;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-
-            width: 700px;
-            margin: auto;
-
         }
 
         #map {
-            width: 90%;
-            height: 800px;
+            margin-top: 20px;
+            max-width: 85%;
+            height: 200px;
+            width: 300px;
         }
 
 
@@ -101,6 +105,7 @@
     <script>
         $(document).ready(function () {
             init_page() // 받은 산의 정보를 바탕으로 페이지의 정보를 초기화합니다.
+
         })
 
         function init_page() {
@@ -113,6 +118,7 @@
                     let rows = response['review_list']
 
                     document.getElementById("store").innerHTML = rows['store']
+                    document.getElementById("localname").innerHTML = rows['localname']
                     document.getElementById("star").innerHTML = '⭐'.repeat(rows['star'])
                     document.getElementById("id").innerHTML = rows['id']
                     document.getElementById("image").innerHTML = rows['image']
@@ -129,48 +135,50 @@
 </head>
 <body>
 
-<button class="mybtn" onclick="window.location.href='/sign_in/index3.html'">
+<button class="mybtn" onclick="window.location.href='/'">
     목록으로 가기
 </button>
 
 <section class="mainbox">
 
-
     <h1 class="title" id="store"></h1>
+    <h4 id="localname"></h4>
     <h5 id="star"></h5>
 
-    <div class="wrap mytitle" id="review_list">
+    <div class="wrap" id="review_list">
 
-        <div class="card">
-            <div class="card-image">
-                <figure class="image is-4by3">
-                    <img id="image" src="#" alt="bread">
-                </figure>
-            </div>
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <img id="image" src="#" alt="bread">
+            </figure>
         </div>
         <div class="card-body">
             <span>추천메뉴: </span> <span class="card-text" id="menu">${menu}</span>
         </div>
 
-        <textarea id="comment" class="textarea is-primary" placeholder="Primary textarea"></textarea>
+        <div class="comment-box">
+            <textarea id="comment" class="textarea is-primary" placeholder="Primary textarea"></textarea>
+        </div>
 
         <div id="map"></div>
 
-        <div id="id"></div>
+        <div class="user">
+            작성자: <span id="id"></span>
+        </div>
 
     </div>
 </section>
 
-<script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-        };
-    // 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+        // 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-</script>
+    </script>
 
 
 </body>
