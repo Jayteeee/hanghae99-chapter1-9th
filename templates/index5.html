@@ -54,7 +54,7 @@
             border-color: lightgrey !important;
             border: solid;
             border-width: 1px;
-            margin: 50px auto;
+            margin: 10px auto 100px;
         }
 
         .is-buton.is-remain {
@@ -67,15 +67,35 @@
             border-radius: 19px;
         }
 
-        .title {
+        .store {
             font-family: 'Nanum Gothic', sans-serif;
-            margin-top: 20px;
-            color: #40E0D0;
-            font-size: 4rem;
+            margin-top: 30px;
+            color: dimgray;
+            font-size: 3rem;
+        }
+
+        #localname {
+            margin-bottom: 15px;
+            font-size: 15pt;
+            color: darkgray;
         }
 
         #star {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card-image {
+            width: auto;
+            height: auto;
+            min-width: 600px;
+            max-width: 600px;
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .card-body {
+            margin: -15px 0px 10px;
         }
 
         .card-menu {
@@ -99,16 +119,11 @@
             width: 580px;
         }
 
-        .card-image {
-            width: 300px;
-            padding: 10px;
-            border-radius: 15px;
-        }
-
         .wrap {
             min-width: 800px;
             width: 90%;
             margin: auto;
+            height: auto;
 
             display: flex;
             flex-direction: column;
@@ -197,19 +212,22 @@
 
 </head>
 <body>
-<a class="button is-primary is-buton is-remain" aria-label="logout"
-   onclick="window.location.href='/'"> 목록으로 가기
-</a>
+
 <div class="mainbox">
-
-    <h1 class="title" id="store"></h1>
-    <h4 id="localname"></h4>
-    <h5 id="star"></h5>
     <div class="wrap" id="review_list">
-
+        <a class="button is-primary is-buton is-remain" aria-label="logout"
+           onclick="window.location.href='/'"> 목록으로 가기
+        </a>
+        <h1 class="store" id="store"></h1>
+        <h4 id="localname"></h4>
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
+        <h5 id="star"></h5>
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img id="file" src="#" alt="bread">
+                <img id="file"
+                     src="#"
+                     alt="bread">
             </figure>
         </div>
         <div class="card-body">
@@ -222,9 +240,12 @@
                       style="height: 100px; border-radius: 19px;"></textarea>
         </div>
         <div id="map"></div>
-    </div>
-    <div class="user">
-        작성자: <span id="id"></span>
+        <div>
+            <hr style="color: gray; width: 600px;">
+            <div class="user">
+                작성자: <span id="id"></span>
+            </div>
+        </div>
     </div>
 </div>
 </body>

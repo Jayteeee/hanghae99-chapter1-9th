@@ -181,7 +181,8 @@
         function find_store() {
             $('#cards-box').empty()
             if ($('#input-store').val() == '') {
-                alert('검색어를 입력해주세요!') // 키워드를 입력하지 않으면 검색이 작동하지 않도록 간단한 장치를 했습니다. 실제로는 입력받은 키워드의 데이터 크기를 찾아야 한다네요.
+                alert('검색어를 입력해주세요!')
+                window.location.reload()// 키워드를 입력하지 않으면 검색이 작동하지 않도록 간단한 장치를 했습니다. 실제로는 입력받은 키워드의 데이터 크기를 찾아야 한다네요.
             } else {
                 let keyword = $('#input-store').val()
                 $.ajax({
@@ -196,16 +197,17 @@
                             let search_store = row[i]['store']
                             let search_file = row[i]['file']
                             let search_star = row[i]['star']
+                            let search_num = row[i]['num']
                             let star_image = '⭐'.repeat(search_star)
                             let temp_html = `<div class="card" style="width: 13rem; margin-left: 15px; border-radius: 19px;">
                                                   <img src="../static/${search_file}"
-                                                     class="card-img-top" alt="${serch_store}">
+                                                     class="card-img-top" alt="${search_store}">
                                                   <div class="card-body">
                                                       <h5 class="card-title"
                                                         style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${search_store}</h5>
                                                       <hr style="color: gray">
                                                       <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
-                                                      <a href="href="/index5?num_give=${num}" class="button is-primary is-buton">상세정보</a>
+                                                      <a href="href="/index5?num_give=${search_num}" class="button is-primary is-buton">상세정보</a>
                                                   </div>
                                              </div>`
                             $('#cards-box').append(temp_html)
