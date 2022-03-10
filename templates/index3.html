@@ -109,7 +109,10 @@
 
         .card-img-top {
             min-height: 300px;
+            max-height: 300px;
             width: auto;
+            object-fit: cover;
+
         }
 
     </style>
@@ -204,17 +207,18 @@
                             let search_star = row[i]['star']
                             let search_num = row[i]['num']
                             let star_image = '⭐'.repeat(search_star)
-                            let temp_html = `<div class="card" style="width: 13rem; margin-left: 15px; border-radius: 19px;">
+                            let temp_html = `<div class="col">
+                                                <div class="card">
                                                   <img src="../static/${search_file}"
                                                      class="card-img-top" alt="${search_store}">
                                                   <div class="card-body">
-                                                      <h5 class="card-title"
-                                                        style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${search_store}</h5>
+                                                      <h5 class="card-title">${search_store}</h5>
                                                       <hr style="color: gray">
                                                       <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
-                                                      <a href="href="/index5?num_give=${search_num}" class="button is-primary is-buton">상세정보</a>
+                                                      <a href="/index5?num_give=${search_num}" class="button is-primary is-buton" style="text-decoration-line:none;">상세정보</a>
                                                   </div>
-                                             </div>`
+                                                </div>
+                                            </div>`
                             $('#cards-box').append(temp_html)
                         }
                         alert(response["msg"])
