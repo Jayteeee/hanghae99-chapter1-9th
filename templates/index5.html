@@ -91,6 +91,7 @@
             padding: 10px;
             border-radius: 15px;
             margin-top: 10px;
+            margin: 10px auto 0px;
         }
 
         .card-body {
@@ -116,25 +117,16 @@
 
         .comment-box {
             width: 580px;
+            margin: 10px auto 20px;
         }
 
-        .wrap {
-            min-width: 800px;
-            width: 90%;
-            margin: auto;
-            height: auto;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
 
         #map {
             margin-top: 20px;
             max-width: 85%;
             height: 400px;
             width: 600px;
+            margin: 10px auto 20px;
         }
 
 
@@ -212,18 +204,18 @@
 
 <div class="mainbox">
     <div class="wrap" id="review_list">
-    <a class="button is-primary is-buton is-remain" aria-label="logout"
-       onclick="window.location.href='/'"> 목록으로 가기
-    </a>
-    <h1 class="store" id="store"></h1>
-    <h4 id="localname"></h4>
-    <hr style="color: gray; width: 600px; margin: 0px auto;">
-    <h5 id="star"></h5>
-    <hr style="color: gray; width: 600px; margin: 0px auto;">
+        <a class="button is-primary is-buton is-remain" aria-label="logout"
+           onclick="window.location.href='/'"> 목록으로 가기
+        </a>
+        <h1 class="store" id="store">어니언</h1>
+        <h4 id="localname">종로구</h4>
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
+        <h5 id="star">&nbsp;⭐&nbsp;⭐&nbsp;⭐&nbsp;</h5>
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
         <div class="card-image">
             <figure class="image is-4by3">
                 <img id="image"
-                     src="#"
+                     src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
                      alt="bread">
             </figure>
         </div>
@@ -238,7 +230,7 @@
         </div>
         <div id="map"></div>
         <div>
-            <hr style="color: gray; width: 600px;">
+            <hr style="color: gray; width: 600px; margin: 10px auto 15px;">
             <div class="user">
                 작성자: <span id="id"></span>
             </div>
