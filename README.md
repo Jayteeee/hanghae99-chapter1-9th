@@ -15,13 +15,13 @@
 
 - 4인 1조 팀 프로젝트
 
-     황인호 : 빵집 포스팅 기능,사진 파일 업로드 기능
+    * 황인호 : 빵집 포스팅 기능,사진 파일 업로드 기능
 
-     김정태 : 상세페이지 제작, 포스팅 기능구현, 지도 검색 기능 구현, API키발급 및 응답 데이터 처리, DB관리
+    * 김정태 : 상세페이지 제작, 포스팅 기능구현, 지도 검색 기능 구현, API키발급 및 응답 데이터 처리, DB관리
   
-     이덕행 : 회원가입, 로그인, 로그아웃 기능구현, 전체 CSS 마무리(레이아웃 디자인, 모바일 전환 등)
+    * 이덕행 : 회원가입, 로그인, 로그아웃 기능구현, 전체 CSS 마무리(레이아웃 디자인, 모바일 전환 등)
 
-     이미란 : 검색기능, 검색필터 기능
+    * 이미란 : 검색기능, 검색필터 기능
 
 
 
@@ -31,24 +31,26 @@
 
 - Back-end
 
-     python 3
+    * python 3
 
-     Flask (python frame work)
+    * Flask (python frame work)
 
-     MongoDB
+    * MongoDB
 
 
 - Front-end
 
-     bootstrap
+    * bootstrap
 
-     bulma
+    * bulma
 
-     JQuery
+    * JQuery
 
-     AJAX
+    * AJAX
 
-     AWS EC2
+- Deploy
+
+    * AWS EC2
 
 
 
@@ -67,12 +69,12 @@
 
 
 - 추천 빵집 포스팅 기능 (사진 파일 업로드 기능)
-index3.html(메인페이지)와 <button>으로 index4.html(등록하기) 연결 후 index4.html 에서입력한(POST) DATA 몽고DB저장 및 index3.html로 붙여넣기(GET)
-사용자가 사진등록시 index3.html 에사진 보이게 기능구현
+  * index3.html(메인페이지)와 <button>으로 index4.html(등록하기) 연결 후 index4.html 에서입력한(POST) DATA 몽고DB저장 및 index3.html로 붙여넣기(GET)
+  * 사용자가 사진등록시 index3.html 에사진 보이게 기능구현
 
 - 지도 기능
 
-     포스팅 시 X,Y 좌표를 디비에 저장하였고 상세페이지 구현 시 GEOCODE를 이용해 좌표를 지도위에 표시하였습니다.
+  * 포스팅 시 X,Y 좌표를 디비에 저장하였고 상세페이지 구현 시 GEOCODE를 이용해 좌표를 지도위에 표시하였습니다.
 
 
 - 검색 필터 및 검색 기능
