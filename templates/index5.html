@@ -8,7 +8,6 @@
     <meta property="og:description" content="일상을 달달하게"/>
     <meta property="og:image"
           content="https://i9.ytimg.com/vi_webp/Gw3yX0vOxrQ/mqdefault.webp?v=6229b591&sqp=CNzrppEG&rs=AOn4CLBjeCSs8DxII5cPV1Jc5DqSjYVmVw"/>
-
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
@@ -49,7 +48,8 @@
         .user {
             color: gray !important;
             background-color: transparent;
-            width: 580px;
+            width: auto;
+            max-width: 580px;
             padding: 9px;
             border-radius: 19px;
             border-color: lightgrey !important;
@@ -88,7 +88,6 @@
         .card-image {
             width: auto;
             height: auto;
-            min-width: 600px;
             max-width: 600px;
             padding: 10px;
             border-radius: 15px;
@@ -118,9 +117,12 @@
         }
 
         .comment-box {
-            width: 580px;
+            width: auto;
             margin: 10px auto 20px;
+            max-width: 580px;
+
         }
+
 
         #map {
             margin-top: 20px;
@@ -212,9 +214,9 @@
         </a>
         <h1 class="store" id="store">어니언</h1>
         <h4 id="localname">종로구</h4>
-        <hr style="color: gray; width: 600px; margin: 0px auto;">
+        <hr style="color: gray; width: 600px; max-width: 90%; margin: 0px auto;">
         <h5 id="star">&nbsp;⭐&nbsp;⭐&nbsp;⭐&nbsp;</h5>
-        <hr style="color: gray; width: 600px; margin: 0px auto;">
+        <hr style="color: gray; width: 600px; max-width: 90%; margin: 0px auto;">
         <div class="card-image">
             <figure class="image is-4by3">
                 <img id="file"
@@ -233,7 +235,7 @@
         </div>
         <div id="map"></div>
         <div>
-            <hr style="color: gray; width: 600px; margin: 10px auto 15px;">
+            <hr style="color: gray; width: auto; max-width: 600px; margin: 10px auto 15px;">
             <div class="user">
                 작성자: <span id="id"></span>
             </div>
