@@ -160,7 +160,7 @@
                     document.getElementById("localname").innerHTML = rows['localname']
                     document.getElementById("star").innerHTML = '&nbsp;⭐&nbsp;'.repeat(rows['star'])
                     document.getElementById("id").innerHTML = rows['username']
-                    document.getElementById("file").innerHTML = rows['file']
+                    document.getElementById("file").src = "../static/" + rows['file']
                     document.getElementById("menu").innerHTML = rows['menu']
                     document.getElementById("comment").innerHTML = rows['comment']
 
