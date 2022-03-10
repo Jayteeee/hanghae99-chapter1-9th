@@ -47,7 +47,8 @@
         .user {
             color: gray !important;
             background-color: transparent;
-            width: 580px;
+            width: auto;
+            max-width: 580px;
             padding: 9px;
             border-radius: 19px;
             border-color: lightgrey !important;
@@ -86,7 +87,6 @@
         .card-image {
             width: auto;
             height: auto;
-            min-width: 600px;
             max-width: 600px;
             padding: 10px;
             border-radius: 15px;
@@ -116,8 +116,10 @@
         }
 
         .comment-box {
-            width: 580px;
+            width: auto;
             margin: 10px auto 20px;
+            max-width: 580px;
+
         }
 
 
@@ -230,7 +232,7 @@
         </div>
         <div id="map"></div>
         <div>
-            <hr style="color: gray; width: 600px; margin: 10px auto 15px;">
+            <hr style="color: gray; width: auto; max-width: 600px; margin: 10px auto 15px;">
             <div class="user">
                 작성자: <span id="id"></span>
             </div>
