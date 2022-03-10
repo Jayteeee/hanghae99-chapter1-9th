@@ -15,7 +15,7 @@
 
 - 4인 1조 팀 프로젝트
 
-     황인호 : 각자 맡은 기능 작성
+     황인호 : 빵집 포스팅 기능,사진 파일 업로드 기능
 
      김정태 : 각자 맡은 기능 작성
   
@@ -67,9 +67,8 @@
 
 
 - 추천 빵집 포스팅 기능 (사진 파일 업로드 기능)
-
-     구현 방법 작성
-
+index3.html(메인페이지)와 <button>으로 index4.html(등록하기) 연결 후 index4.html 에서입력한(POST) DATA 몽고DB저장 및 index3.html로 붙여넣기(GET)
+사용자가 사진등록시 index3.html 에사진 보이게 기능구현
 
 - 지도 기능
 
@@ -104,4 +103,7 @@ A. 메인페이지에서 저장되어있는 토큰을 인식하지 못해서 아
    ```python 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
    ```
-
+Q. 이미지 파일을 서버에 Data저장시 이미지 파일명이 fakepath로 저장되는 오류 발생.
+     
+A. 기존의 Data를 저장하는 형식으로 저장하였으나 정상적으로 반영이되지않았고 해당내용의 Data저장방식을 let form_data = newFormData형식으로 수정하고
+이미지로 저장하고 html에 사진이 나올수있도록 반영함
