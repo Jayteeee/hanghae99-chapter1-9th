@@ -18,7 +18,6 @@
             crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 
-
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd51ea275f11885a15fbe3d5d1d142c4&libraries=services,drawing"></script>
 
@@ -173,57 +172,6 @@
                     window.location.reload()
                 }
             });
-        }
-
-        // var sel_file;
-        //
-        // $(document).ready(function () {
-        //     $("#file1").on("change", handleImagFileSelect);
-        // });
-        //
-        // function handleImagFileSelect(e) {
-        //     var files = e.target.files;
-        //     var filesArr = Array.prototype.slice.call(files);
-        //
-        //     var reg = /(.*?)|/(jpg | jpeg | png | bmp)
-        //     $;
-        //
-        //     filesArr.forEach(function (f))
-        //     {
-        //         if (!f.type.match(reg)) {
-        //             alert('확장자는 이미지 확장자만 가능합니다.');
-        //             return;
-        //         }
-        //         sel_file = f;
-        //
-        //         var reader = new FileReader();
-        //         reader.onload = function (e) {
-        //             $('#img').arrt("src", e.target.result);
-        //         }
-        //         reader.readAsDataURL(f);
-        //     }
-        // }
-    </script>
-    <script>
-        function fn_sumbit() {
-
-            var form = new FormData();
-            form.append("file", $("#file1")[0].files[0]);
-
-            $.ajax({
-                url: "/index3.html",
-                type: POST,
-                processData: false,
-                dontentType: false,
-                data: form,
-                success: function (response) {
-                    alert('성공하였습니다.');
-                    console.log(response);
-                }
-                , error: function (jqXHR) {
-                    alert(jqXHR.responseText);
-                }
-            })
         }
     </script>
 </head>
