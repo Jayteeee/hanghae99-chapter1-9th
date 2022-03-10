@@ -101,5 +101,5 @@ A. 처음에는 서버에서 전체 목록을 불러와서 클라이언트에서
 Q. 메인페이지에서 로그아웃을 위해 토큰을 제거하려 하는데 타입에러 오류가 발생.
 
 A. 메인페이지에서 저장되어있는 토큰을 인식하지 못해서 아래 코드를 추가해주어 jQuery플러그인 기능 사용하여 제거했습니다.
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+   ```python <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>```
 
