@@ -102,5 +102,6 @@ Q. 메인페이지에서 로그아웃을 위해 토큰을 제거하려 하는데
 
 A. 메인페이지에서 저장되어있는 토큰을 인식하지 못해서 아래 코드를 추가해주어 jQuery플러그인 기능 사용하여 제거했습니다.
    ```python 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>```
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+   ```
 
