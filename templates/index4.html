@@ -16,8 +16,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
-
 
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd51ea275f11885a15fbe3d5d1d142c4&libraries=services,drawing"></script>
@@ -106,6 +106,17 @@
         .is-complete {
             background-color: #40E0D0 !important;
             border-radius: 19px;
+            margin-top: 10px;
+        }
+
+        .is-buton.is-remain {
+            color: #40E0D0!important;
+            background-color: white !important;
+            border-color: #40E0D0 !important;
+            left: 47%;
+            transform: translate(-50%, 30%);
+            text-decoration-line: none;
+            border-radius: 19px;
         }
 
     </style>
@@ -153,81 +164,37 @@
             let localname = $('#localname').val()
             let star = $('#star').val()
             let comment = $('#comment').val()
-            let image = $('#image').val()
             let address = $('#address').val()
+            let file = $('#file')[0].files[0]
+            let form_data = new FormData()
+
+            form_data.append("file_give", file)
+            form_data.append("comment_give", comment)
+            form_data.append("star_give", star)
+            form_data.append("store_give", store)
+            form_data.append("localname_give", localname)
+            form_data.append("address_give", address)
+            form_data.append("menu_give", menu)
 
             $.ajax({
                 type: "POST",
                 url: "/review",
-                data: {
-                    store_give: store,
-                    menu_give: menu,
-                    localname_give: localname,
-                    star_give: star,
-                    comment_give: comment,
-                    image_give: image,
-                    address_give: address
-                },
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
                 }
             });
         }
-
-        // var sel_file;
-        //
-        // $(document).ready(function () {
-        //     $("#file1").on("change", handleImagFileSelect);
-        // });
-        //
-        // function handleImagFileSelect(e) {
-        //     var files = e.target.files;
-        //     var filesArr = Array.prototype.slice.call(files);
-        //
-        //     var reg = /(.*?)|/(jpg | jpeg | png | bmp)
-        //     $;
-        //
-        //     filesArr.forEach(function (f))
-        //     {
-        //         if (!f.type.match(reg)) {
-        //             alert('확장자는 이미지 확장자만 가능합니다.');
-        //             return;
-        //         }
-        //         sel_file = f;
-        //
-        //         var reader = new FileReader();
-        //         reader.onload = function (e) {
-        //             $('#img').arrt("src", e.target.result);
-        //         }
-        //         reader.readAsDataURL(f);
-        //     }
-        // }
-    </script>
-    <script>
-        function fn_sumbit() {
-
-            var form = new FormData();
-            form.append("file", $("#file1")[0].files[0]);
-
-            $.ajax({
-                url: "/index3.html",
-                type: POST,
-                processData: false,
-                dontentType: false,
-                data: form,
-                success: function (response) {
-                    alert('성공하였습니다.');
-                    console.log(response);
-                }
-                , error: function (jqXHR) {
-                    alert(jqXHR.responseText);
-                }
-            })
-        }
     </script>
 </head>
 <body>
+<a class="button is-primary is-buton is-remain" aria-label="logout"
+   onclick="window.location.href='/'"> 목록으로 가기
+</a>
 <section class="main-box">
     <h1 class="title">동네빵집</h1>
     <h1 class="mini-title">일상을 달달하게</h1>
@@ -303,8 +270,8 @@
 
     <div class="file-choose">
         <div class="input-group mb-3" style="margin-top: 15px;">
-            <input type="file" class="form-control" id="image" style="border-radius: 19px 0px 0px 19px;">
-            <label class="input-group-text" for="image" style="border-radius: 0px 19px 19px 0px;"></label>
+            <input type="file" class="form-control" id="file" style="border-radius: 19px 0px 0px 19px;">
+            <label class="input-group-text" for="file" style="border-radius: 0px 19px 19px 0px;"></label>
         </div>
     </div>
     <hr style="color: gray;">

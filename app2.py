@@ -1,3 +1,4 @@
+import requests as requests
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -14,7 +15,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@cluster0.xzxzt.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://test:sparta@cluster0.3jj7o.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbsparta
 
 @app.route('/')
@@ -48,7 +49,7 @@ def sign_in():
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256') .decode('utf-8')
 
         return jsonify({'result': 'success', 'token': token, 'msg': '로그인 되었습니다.'})
     # 찾지 못하면
@@ -87,37 +88,101 @@ def index4():
 
 @app.route("/review", methods=["POST"])
 def review_post():
-    store_receive = request.form['store_give']
-    localname_receive = request.form['localname_give']
-    star_receive = request.form['star_give']
-    address_receive = request.form['address_give']
-    menu_receive = request.form['menu_give']
-    comment_receive = request.form['comment_give']
-    image_receive = request.form['image_give']
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # 포스팅하기
+        user_info = db.users.find_one({"username": payload["id"]})
+        store_receive = request.form['store_give']
+        localname_receive = request.form['localname_give']
+        star_receive = request.form['star_give']
+        address_receive = request.form['address_give']
+        menu_receive = request.form['menu_give']
+        comment_receive = request.form['comment_give']
 
+        file = request.files["file_give"]
 
-    doc = {
-        'store':store_receive,
-        'menu':menu_receive,
-        'localname': localname_receive,
-        'star': star_receive,
-        'comment': comment_receive,
-        'image': image_receive,
-        'address': address_receive,
-    }
-    db.project01.insert_one(doc)
-    return jsonify({'msg': '등록 완료!'})
+        today = datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
 
-# @app.route("/review", methods=["GET"])
-# def review_get():
-#     reviews_list = list(db.reviews.find({}, {'_id': False}))
-#     return jsonify({'review': reviews_list})
+        filename = f'file-{mytime}'
+
+        extension = file.filename.split('.')[-1]
+
+        save_to = f'static/{filename}.{extension}'
+        file.save(save_to)  # 경로와 이름을 넣는다
+
+        review_list = list(db.project01.find({}, {'_id': False}))
+        count = len(review_list) + 1
+
+        headers = {
+            "X-NCP-APIGW-API-KEY-ID": "y988czmmp0",
+            "X-NCP-APIGW-API-KEY": "poWdnsO7LsAj2w1BYk8IqqkY292WcYa6AVKlapQe"
+        }
+        r = requests.get(f"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={address_receive}",
+                         headers=headers)
+        response = r.json()
+        if response["status"] == "OK":
+            if len(response["addresses"]) > 0:
+                x = float(response["addresses"][0]["x"])
+                y = float(response["addresses"][0]["y"])
+                print(x, y)
+
+        doc = {
+            'num':count,
+            'store':store_receive,
+            'menu':menu_receive,
+            'localname': localname_receive,
+            'star': star_receive,
+            'comment': comment_receive,
+            'file': f'{filename}.{extension}',
+            'username': user_info['username'],
+            'address_x': x,
+            'address_y': y
+
+        }
+        db.project01.insert_one(doc)
+
+        return jsonify({'result':'success','msg': '등록 완료!'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("/"))
+
+#<!-- 검색 기능 구현 -->#
+@app.route('/search', methods=['GET']) # /search로 키워드를 받아 빵집 이름과 일치 결과를 찾아냅니다.
+def search_get():
+   doc = [] # 검색을 마친 자료가 들어갈 배열입니다.
+   store_receive = request.args.get('store_give') # Ajax에서 store_give로 보낸 데이터를 받습니다.
+   stores = list(db.project01.find({},{'_id':False})) # 빵집의 전체 목록을 stores 변수로 받아옵니다.
+   for store in stores:
+      if store_receive in store['store']: # store_receive로 받은 검색어를 찾아봅니다.
+         doc.append(store) # 일치하는 빵집을 doc 배열에 집어넣습니다.
+   search_list = {'search_list':doc} # API로 전달할 수 있는 자료에 배열 형태는 없으므로, 딕셔너리로 만들어야 합니다.
+   return jsonify({'search_list':search_list, 'msg':'검색완료!'})
 
 
 @app.route("/project01", methods=["GET"])
 def project01_get():
     project01_list = list(db.project01.find({}, {'_id': False}))
-    return jsonify({'project01': project01_list})
+    return jsonify({'projects01': project01_list})
+
+# index5로 연결하면서 num_give 데이터를 전송
+@app.route('/index5')
+def index5():
+    num_receive = request.args.get('num_give')
+    return render_template('index5.html', num = num_receive)
+
+@app.route('/index5_show', methods=['GET'])
+def show_index5():
+    num_receive = request.args.get('num_give')
+    reviews = db.project01.find_one({'num':int(num_receive)},{'_id':False})
+    return jsonify({'review_list':reviews})
+
+@app.route('/index5_map', methods=['GET'])
+def map_index5():
+    num_receive = request.args.get('num_give')
+    reviews = db.project01.find_one({'num':int(num_receive)},{'_id':False})
+    return jsonify({'review_list':reviews})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
