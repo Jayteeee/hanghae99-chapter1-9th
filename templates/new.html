@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta property="og:title" content="동네빵집"/>
-    <meta property="og:description" content="일상을 달달하게"/>
-    <meta property="og:image"
-          content="https://i9.ytimg.com/vi_webp/Gw3yX0vOxrQ/mqdefault.webp?v=6229b591&sqp=CNzrppEG&rs=AOn4CLBjeCSs8DxII5cPV1Jc5DqSjYVmVw"/>
+    <meta property="og:title" content="항해99 6기 9조"/>
+    <meta property="og:description" content="우리동네 빵집"/>
+    <meta property="og:image" content="이미지URL주소입력"/>
+
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
@@ -22,7 +22,6 @@
     <script src="/path/to/jquery.cookie.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
@@ -141,7 +140,6 @@
         let map;
         let markers = []
         $(document).ready(function () {
-            bsCustomFileInput.init()
             init_page() // 받은 빵집의 정보를 바탕으로 페이지의 정보를 초기화합니다.
             map = new naver.maps.Map('map', {
                 center: new naver.maps.LatLng(y_cen, x_cen),
@@ -169,10 +167,9 @@
                     document.getElementById("localname").innerHTML = rows['localname']
                     document.getElementById("star").innerHTML = '&nbsp;⭐&nbsp;'.repeat(rows['star'])
                     document.getElementById("id").innerHTML = rows['username']
-                    document.getElementById("file").src = "../static/" + rows['file']
+                    document.getElementById("image").innerHTML = rows['image']
                     document.getElementById("menu").innerHTML = rows['menu']
                     document.getElementById("comment").innerHTML = rows['comment']
-
 
                 }
 
@@ -214,12 +211,12 @@
         </a>
         <h1 class="store" id="store">어니언</h1>
         <h4 id="localname">종로구</h4>
-        <hr style="color: gray; width: 600px; max-width: 90%; margin: 0px auto;">
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
         <h5 id="star">&nbsp;⭐&nbsp;⭐&nbsp;⭐&nbsp;</h5>
-        <hr style="color: gray; width: 600px; max-width: 90%; margin: 0px auto;">
+        <hr style="color: gray; width: 600px; margin: 0px auto;">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img id="file"
+                <img id="image"
                      src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
                      alt="bread">
             </figure>
