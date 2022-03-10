@@ -24,10 +24,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cd51ea275f11885a15fbe3d5d1d142c4&libraries=services,drawing"></script>
 
     <title>Detail | 동네빵집</title>
+
+    <!-- 지도 api-->
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=y988czmmp0&submodules=geocoder"></script>
 
     <style>
         * {
@@ -46,6 +48,7 @@
         .mainbox {
             background-color: white;
             position: absolute;
+            max-width: 90%;
             height: 90%;
             top: 50%;
             left: 50%;
@@ -57,6 +60,7 @@
             position: fixed;
             right: 60px;
             top: 20px;
+            z-index: 10;
 
         }
 
@@ -103,16 +107,30 @@
     </style>
 
     <script>
+        let y_cen = 37.4981125   // lat
+        let x_cen = 127.0379399  // long
+        let map;
+        let markers = []
         $(document).ready(function () {
-            init_page() // 받은 산의 정보를 바탕으로 페이지의 정보를 초기화합니다.
+            init_page() // 받은 빵집의 정보를 바탕으로 페이지의 정보를 초기화합니다.
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(y_cen, x_cen),
+                zoom: 12,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: naver.maps.ZoomControlStyle.SMALL,
+                    position: naver.maps.Position.TOP_RIGHT
+                }
+            });
 
+            make_map();
         })
 
         function init_page() {
             // $('#review_list').empty()
             $.ajax({
                 type: "GET",
-                url: "/index5_show?num_give=" + '{{num}}', // app.py에서 mnt_no로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
+                url: "/index5_show?num_give=" + '{{num}}', // app.py에서 num_give로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
                 data: {},
                 success: function (response) {
                     let rows = response['review_list']
@@ -128,6 +146,29 @@
                 }
 
             })
+        }
+
+        function make_map() {
+            $.ajax({
+                type: "GET",
+                url: "/index5_map?num_give=" + '{{num}}', // app.py에서 num_give로 받은 정보를 활용해 검색 후 데이터를 받아옵니다. flask를 통해 받은 데이터는 {{데이터}} 로 활용이 가능해요.
+                data: {},
+                success: function (response) {
+                    let rows = response['review_list']
+
+                    map = new naver.maps.Map('map', { //지도를 띄운다
+                        center: new naver.maps.LatLng(rows['address_y'], rows['address_x']),
+                        zoom: 15
+                        });
+
+                    marker = new naver.maps.Marker({ //지도에 마커를 띄운다
+                        position: new naver.maps.LatLng(rows['address_y'], rows['address_x']), //어느 위치에
+                        map: map
+                        });
+                    }
+
+                })
+
         }
     </script>
 
@@ -168,17 +209,6 @@
 
     </div>
 </section>
-
-    <script>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
-            };
-        // 지도를 생성합니다
-        var map = new kakao.maps.Map(mapContainer, mapOption);
-
-    </script>
 
 
 </body>

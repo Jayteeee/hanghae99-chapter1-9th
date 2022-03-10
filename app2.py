@@ -1,3 +1,4 @@
+import requests as requests
 from pymongo import MongoClient
 import jwt
 import datetime
@@ -103,6 +104,18 @@ def review_post():
         review_list = list(db.project01.find({}, {'_id': False}))
         count = len(review_list) + 1
 
+        headers = {
+            "X-NCP-APIGW-API-KEY-ID": "y988czmmp0",
+            "X-NCP-APIGW-API-KEY": "poWdnsO7LsAj2w1BYk8IqqkY292WcYa6AVKlapQe"
+        }
+        r = requests.get(f"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query={address_receive}",
+                         headers=headers)
+        response = r.json()
+        if response["status"] == "OK":
+            if len(response["addresses"]) > 0:
+                x = float(response["addresses"][0]["x"])
+                y = float(response["addresses"][0]["y"])
+                print(x, y)
 
         doc = {
             'num':count,
@@ -112,8 +125,9 @@ def review_post():
             'star': star_receive,
             'comment': comment_receive,
             'image': image_receive,
-            'address': address_receive,
-            'username': user_info['username']
+            'username': user_info['username'],
+            'address_x': x,
+            'address_y': y
 
         }
         db.project01.insert_one(doc)
@@ -140,7 +154,7 @@ def project01_get():
     project01_list = list(db.project01.find({}, {'_id': False}))
     return jsonify({'projects01': project01_list})
 
-# index_sub로 연결하면서 mnt_no 데이터를 전송
+# index5로 연결하면서 num_give 데이터를 전송
 @app.route('/index5')
 def index5():
     num_receive = request.args.get('num_give')
@@ -151,6 +165,13 @@ def show_index5():
     num_receive = request.args.get('num_give')
     reviews = db.project01.find_one({'num':int(num_receive)},{'_id':False})
     return jsonify({'review_list':reviews})
+
+@app.route('/index5_map', methods=['GET'])
+def map_index5():
+    num_receive = request.args.get('num_give')
+    reviews = db.project01.find_one({'num':int(num_receive)},{'_id':False})
+    return jsonify({'review_list':reviews})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
