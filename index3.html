@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -12,49 +15,107 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
-    <title>동네빵집(Main></title>
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
+          rel="stylesheet">
+
+    <title>Main | 동네빵집</title>
 
     <style>
         * {
-            font-family: 'Gowun Dodum', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            color: #40E0D0;
+        }
+
+        body {
+            background-color: white;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-box {
+            background-color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .is-buton.is-logout {
+            color: #40E0D0 !important;
+            background-color: white !important;
+            border-color: #40E0D0 !important;
+            left: 47%;
+            transform: translate(-50%, 30%);
+            text-decoration-line: none;
+        }
+
+        .title {
+            font-family: 'Gugi', cursive;
+            margin-top: 60px;
+            color: #40E0D0;
+            font-size: 4rem;
+        }
+
+        .mini-title {
+            font-family: 'Nanum Pen Script', cursive;
+            font-size: 2rem;
+            margin-top: -19px
+        }
+
+        .beststore {
+            margin-top: 5px;
+            padding: 10px 0px 10px 0px;
+            width: 100%;
+            min-height: 30px;
+            font-family: 'Gamja Flower', cursive;
         }
 
         .mytitle {
-            /*background-color: green;*/
-            width: 1000px;
-            height: 500px;
-            margin: auto;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
+            margin: 50px auto;
+            max-width: 70rem;
         }
 
-        .search {
-            position: relative;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        .fa-search {
-            position: absolute;
-            left: 15px;
-            top: 22px;
-            margin: 0;
-        }
-        .cover1 {
-            width: 100%;
-            height: 1000px;
-            background-color: blanchedalmond;
-        }
         .card {
-            margin-right: 10px;
+            border-radius: 19px;
         }
+
+        .card-title {
+            color: dimgray;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 15px 0px 30px 0px;
+
+        }
+
+        .search-box {
+            margin: 50px auto;
+            margin-bottom: 20px;
+        }
+
+        .is-buton {
+            color: white !important;
+            background-color: #40E0D0 !important;
+            border-radius: 19px;
+        }
+
+        .card-img-top {
+            min-height: 300px;
+            width: auto;
+        }
+
     </style>
     <script>
         $(document).ready(function () {
+            bsCustomFileInput.init()
             show_project01();
         });
 
@@ -64,24 +125,27 @@
                 url: "/project01",
                 data: {},
                 success: function (response) {
-                    let rows = response['project01']
+                    let rows = response['projects01']
                     for (let i = 0; i < rows.length; i++) {
-                        let localname = rows[i]['localname']
-                        let address = rows[i]['address']
-                        let menu = rows[i]['menu']
                         let store = rows[i]['store']
-                        let image = rows[i]['image']
+                        let file = rows[i]['file']
                         let star = rows[i]['star']
+                        let num = rows[i]['num']
 
-                        let temp_html = `<div class="card" style="width: 18rem;">
-                                            <img src="${image}"
-                                                 class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">${localname}</h5>
-                                                <p class="card-text">${star}</p>
+                        let star_image = '⭐'.repeat(star)
+
+                        let temp_html = `<div class="col">
+                                            <div class="card">
+                                              <img src="../static/${file}" class="card-img-top" alt="${store}">
+                                              <div class="card-body">
+                                                  <h5 class="card-title">${store}</h5>
+                                                  <hr style="color: gray">
+                                                  <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
+                                                  <a href="/index5?num_give=${num}" class="button is-primary is-buton" style="text-decoration-line:none;">상세정보</a>
+                                              </div>
                                             </div>
-                                        </div>`
-                        $('#cards-box').append(temp_html)
+                                         </div>`
+                        $("#cards-box").append(temp_html)
                     }
                 }
             });
@@ -98,7 +162,13 @@
             $.ajax({
                 type: "POST",
                 url: "/project01",
-                data: {name_give: name, address_give: address, menu_give: menu, comment_give: comment, star_give: star},
+                data: {
+                    name_give: name,
+                    address_give: address,
+                    menu_give: menu,
+                    comment_give: comment,
+                    star_give: star
+                },
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
@@ -106,65 +176,96 @@
             });
         }
 
-        // function done_bucket(num) {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/bucket/done",
-        //         data: {sameple_give: '데이터전송'},
-        //         success: function (response) {
-        //             alert(response["msg"])
-        //         }
-        //     });
-        // }
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
+        }
+
+        <!-- 검색 기능 구현 -->
+        function find_store() {
+            $('#cards-box').empty()
+            if ($('#input-store').val() == '') {
+                alert('검색어를 입력해주세요!')
+                window.location.reload()// 키워드를 입력하지 않으면 검색이 작동하지 않도록 간단한 장치를 했습니다. 실제로는 입력받은 키워드의 데이터 크기를 찾아야 한다네요.
+            } else {
+                let keyword = $('#input-store').val()
+                $.ajax({
+                    type: "GET",
+                    url: "/search?store_give=" + keyword,
+                    data: {},
+                    success: function (response) {
+                        let rows = response['search_list']
+                        let row = rows['search_list']
+                        console.log(rows['search_list']) // 검색어를 입력한 후, 콘솔창에 데이터가 잘 들어왔는지 확인해 봅시다.
+                        for (let i = 0; i < row.length; i++) {
+                            let search_store = row[i]['store']
+                            let search_file = row[i]['file']
+                            let search_star = row[i]['star']
+                            let search_num = row[i]['num']
+                            let star_image = '⭐'.repeat(search_star)
+                            let temp_html = `<div class="card" style="width: 13rem; margin-left: 15px; border-radius: 19px;">
+                                                  <img src="../static/${search_file}"
+                                                     class="card-img-top" alt="${search_store}">
+                                                  <div class="card-body">
+                                                      <h5 class="card-title"
+                                                        style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${search_store}</h5>
+                                                      <hr style="color: gray">
+                                                      <p class="card-text" style="letter-spacing: 7px; font-size: 16pt;">${star_image}</p>
+                                                      <a href="href="/index5?num_give=${search_num}" class="button is-primary is-buton">상세정보</a>
+                                                  </div>
+                                             </div>`
+                            $('#cards-box').append(temp_html)
+                        }
+                        alert(response["msg"])
+                    }
+                })
+            }
+        }
+
+        <!-- 검색 필터 기능 구현 -->
+        function filter() {
+            let search = document.getElementById("input-store").value.toLowerCase();
+            let listInner = document.getElementsByClassName("card");
+
+            for (let i = 0; i < listInner.length; i++) {
+                store = listInner[i].getElementsByClassName("card-title");
+                if (store[0].innerHTML.toLowerCase().indexOf(search) != -1) {
+                    listInner[i].style.display = "flex"
+                } else {
+                    listInner[i].style.display = "none"
+                }
+            }
+        }
+
+
     </script>
 </head>
 <body>
-<div class="cover1">
-    <h1 style="width: 190px; height: 60px; margin: 20px auto; color: #40E0D0;">동네빵집</h1>
-    <button style="position: fixed; top: 20px; left: 1280px; right: 0; width: 100px; background-color: #40E0D0; border-radius: 19px; border-color: transparent; color: #fff !important;">
-        Logout
-    </button>
-    <div class="search">
-        <i class="fas fa-search"></i>
-        <input type="text">
-        <i class="fas fa-keyboard"></i>
-        <i class="fas fa-microphone"></i>
-        <!--    아이콘삽입예정-->
-        <button>검색</button>
-        <button><a href="index4.html" target="_blank">등록하기</a></button>
-    </div>
-    <h2 style="margin: 20px auto; width: 180px; height: 40px">Best 빵집</h2>
-    <div class="mytitle">
-        <div class="card" style="width: 18rem;">
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA5MDhfOTQg%2FMDAxNTY3OTQ2OTU2MTA2.-L82tyexg_Fo0TtoZ_68yI-N6OUsCDmM6wvqX5of228g.Iqw5DZiv6rTBV88IPsMTFJ_Pmq-RMzR05qlmBCzaWzkg.JPEG.dddowny%2FIMG_1470.jpg&type=sc960_832"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">빅토리아 베이커리</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
-            </div>
+<div class="main-box">
+    <div>
+        <nav>
+            <a class="button is-primary is-buton is-logout is-outlined" aria-label="logout"
+               onclick="sign_out()"> 로그아웃
+            </a>
+        </nav>
+        <h1 class="title">동네빵집</h1>
+        <h1 class="mini-title">일상을 달달하게</h1>
+        <div class="search-box d-flex justify-content-center">
+            <input id="input-store" class="form-control" style="margin-right: 0.5rem; width: 10rem" onkeyup="filter()">
+            <button class="button is-primary is-buton" onclick="find_store()"><i class="fa fa-search"></i>검색
+            </button>
+            <a class="button is-primary is-buton" href="/index4.html" target="_blank"
+               style="margin-left: 5px; text-decoration-line:none;">등록하기</a>
         </div>
-        <div class="card" style="width: 18rem;">
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAxMjdfODkg%2FMDAxNTgwMTAzMTk1NTIw.6Nfi6txn0ZRaGMG3_OJuCkoXqhDHlgASE0jlcnSeAe8g.r7YDLbqqdbdBeFhNpTYxZ5j1LLUJ4HKjnHqHDsUP_Xsg.JPEG.skrhdwn2496%2FIMG_2174.jpg&type=sc960_832"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">맘마미아</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
-                 class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">어글리 베이커리</h5>
-                <p class="card-text">⭐⭐⭐⭐</p>
-                <a href="#" class="btn btn-primary">상세정보 확인하기</a>
-            </div>
-        </div>
-    </div>
-    <div id="cards-box">
 
+    </div>
+    <h2 class="beststore" style="background-color: #40E0D0; color: white;">Best 빵집</h2>
+    <hr style="color: gray">
+    <div class="mytitle">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="cards-box">
+        </div>
+        <hr style="color: gray">
     </div>
 </div>
 </div>
