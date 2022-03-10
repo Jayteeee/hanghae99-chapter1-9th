@@ -17,6 +17,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
           rel="stylesheet">
@@ -109,6 +110,7 @@
     </style>
     <script>
         $(document).ready(function () {
+            bsCustomFileInput.init()
             show_project01();
         });
 
@@ -121,7 +123,7 @@
                     let rows = response['projects01']
                     for (let i = 0; i < rows.length; i++) {
                         let store = rows[i]['store']
-                        let image = rows[i]['image']
+                        let file = rows[i]['file']
                         let star = rows[i]['star']
                         let num = rows[i]['num']
 
@@ -129,7 +131,7 @@
 
                         let temp_html = `<div class="col">
                                             <div class="card">
-                                              <img src="${image}" class="card-img-top" alt="...">
+                                              <img src="../static/${file}" class="card-img-top" alt="${store}">
                                               <div class="card-body">
                                                   <h5 class="card-title">${store}</h5>
                                                   <hr style="color: gray">
@@ -192,12 +194,12 @@
                         console.log(rows['search_list']) // 검색어를 입력한 후, 콘솔창에 데이터가 잘 들어왔는지 확인해 봅시다.
                         for (let i = 0; i < row.length; i++) {
                             let search_store = row[i]['store']
-                            let search_image = row[i]['image']
+                            let search_file = row[i]['file']
                             let search_star = row[i]['star']
                             let star_image = '⭐'.repeat(search_star)
                             let temp_html = `<div class="card" style="width: 13rem; margin-left: 15px; border-radius: 19px;">
-                                                  <img src="${search_image}"
-                                                     class="card-img-top" alt="${search_image}">
+                                                  <img src="../static/${search_file}"
+                                                     class="card-img-top" alt="${serch_store}">
                                                   <div class="card-body">
                                                       <h5 class="card-title"
                                                         style="color: dimgray; font-size: 1.3rem; font-weight: bold; margin: 15px 0px 30px 0px">${search_store}</h5>
@@ -236,7 +238,7 @@
 <div class="main-box">
     <div>
         <nav>
-            <a class="button is-primary is-buton is-outlined" aria-label="logout"
+            <a class="button is-primary is-buton is-logout is-outlined" aria-label="logout"
                onclick="sign_out()"> 로그아웃
             </a>
         </nav>

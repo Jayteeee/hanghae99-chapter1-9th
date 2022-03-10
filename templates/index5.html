@@ -22,8 +22,10 @@
     <script src="/path/to/jquery.cookie.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Gugi&family=Nanum+Gothic&family=Nanum+Pen+Script&display=swap"
+          rel="stylesheet">
 
     <title>Detail | 동네빵집</title>
 
@@ -34,49 +36,67 @@
     <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
-            color: #40E0D0;
+            color: dimgray;
         }
 
         body {
-            background-color: #FFFFF0;
-            text-align: center;
-            min-height: 100vh;
-            height: 100%;
-            font-family: 'Nanum Pen Script', cursive;
-        }
-
-        .mainbox {
             background-color: white;
-            position: absolute;
-            max-width: 90%;
-            height: 90%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 30px;
+            text-align: center;
+            min-height: 130vh;
         }
 
-        .mybtn {
-            position: fixed;
-            right: 60px;
-            top: 20px;
-            z-index: 10;
+        .user {
+            color: gray !important;
+            background-color: transparent;
+            width: 580px;
+            padding: 9px;
+            border-radius: 19px;
+            border-color: lightgrey !important;
+            border: solid;
+            border-width: 1px;
+            margin: 50px auto;
+        }
 
+        .is-buton.is-remain {
+            color: #40E0D0 !important;
+            background-color: white !important;
+            border-color: #40E0D0 !important;
+            left: 47%;
+            transform: translate(-50%, 30%);
+            text-decoration-line: none;
+            border-radius: 19px;
         }
 
         .title {
-            font-family: 'Gugi', cursive;
+            font-family: 'Nanum Gothic', sans-serif;
             margin-top: 20px;
             color: #40E0D0;
             font-size: 4rem;
         }
 
         #star {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+        }
+
+        .card-menu {
+            background-color: #40E0D0;
+            color: white;
+            padding: 10px;
+            border-radius: 19px;
+        }
+
+        .card-text {
+            background-color: transparent;
+            padding: 9px;
+            border-radius: 19px;
+            border-color: lightgrey !important;
+            border: solid;
+            border-width: 1px;
+            color: gray;
         }
 
         .comment-box {
-            width: 600px;
+            width: 580px;
         }
 
         .card-image {
@@ -99,8 +119,8 @@
         #map {
             margin-top: 20px;
             max-width: 85%;
-            height: 200px;
-            width: 300px;
+            height: 400px;
+            width: 600px;
         }
 
 
@@ -112,6 +132,7 @@
         let map;
         let markers = []
         $(document).ready(function () {
+            bsCustomFileInput.init()
             init_page() // 받은 빵집의 정보를 바탕으로 페이지의 정보를 초기화합니다.
             map = new naver.maps.Map('map', {
                 center: new naver.maps.LatLng(y_cen, x_cen),
@@ -137,11 +158,12 @@
 
                     document.getElementById("store").innerHTML = rows['store']
                     document.getElementById("localname").innerHTML = rows['localname']
-                    document.getElementById("star").innerHTML = '⭐'.repeat(rows['star'])
+                    document.getElementById("star").innerHTML = '&nbsp;⭐&nbsp;'.repeat(rows['star'])
                     document.getElementById("id").innerHTML = rows['username']
-                    document.getElementById("image").innerHTML = rows['image']
+                    document.getElementById("file").innerHTML = rows['file']
                     document.getElementById("menu").innerHTML = rows['menu']
                     document.getElementById("comment").innerHTML = rows['comment']
+
 
                 }
 
@@ -159,15 +181,15 @@
                     map = new naver.maps.Map('map', { //지도를 띄운다
                         center: new naver.maps.LatLng(rows['address_y'], rows['address_x']),
                         zoom: 15
-                        });
+                    });
 
                     marker = new naver.maps.Marker({ //지도에 마커를 띄운다
                         position: new naver.maps.LatLng(rows['address_y'], rows['address_x']), //어느 위치에
                         map: map
-                        });
-                    }
+                    });
+                }
 
-                })
+            })
 
         }
     </script>
@@ -175,41 +197,35 @@
 
 </head>
 <body>
-
-<button class="mybtn" onclick="window.location.href='/'">
-    목록으로 가기
-</button>
-
-<section class="mainbox">
+<a class="button is-primary is-buton is-remain" aria-label="logout"
+   onclick="window.location.href='/'"> 목록으로 가기
+</a>
+<div class="mainbox">
 
     <h1 class="title" id="store"></h1>
     <h4 id="localname"></h4>
     <h5 id="star"></h5>
-
     <div class="wrap" id="review_list">
 
         <div class="card-image">
             <figure class="image is-4by3">
-                <img id="image" src="#" alt="bread">
+                <img id="file" src="#" alt="bread">
             </figure>
         </div>
         <div class="card-body">
-            <span>추천메뉴: </span> <span class="card-text" id="menu">${menu}</span>
+            <span class="card-menu">추천메뉴</span>
+            <span class="card-text" id="menu"></span>
         </div>
 
         <div class="comment-box">
-            <textarea id="comment" class="textarea is-primary" placeholder="Primary textarea"></textarea>
+            <textarea id="comment" class="textarea" type="text"
+                      style="height: 100px; border-radius: 19px;"></textarea>
         </div>
-
         <div id="map"></div>
-
-        <div class="user">
-            작성자: <span id="id"></span>
-        </div>
-
     </div>
-</section>
-
-
+    <div class="user">
+        작성자: <span id="id"></span>
+    </div>
+</div>
 </body>
 </html>

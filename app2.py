@@ -99,7 +99,18 @@ def review_post():
         address_receive = request.form['address_give']
         menu_receive = request.form['menu_give']
         comment_receive = request.form['comment_give']
-        image_receive = request.form['image_give']
+
+        file = request.files["file_give"]
+
+        today = datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+
+        filename = f'file-{mytime}'
+
+        extension = file.filename.split('.')[-1]
+
+        save_to = f'static/{filename}.{extension}'
+        file.save(save_to)  # 경로와 이름을 넣는다
 
         review_list = list(db.project01.find({}, {'_id': False}))
         count = len(review_list) + 1
@@ -124,7 +135,7 @@ def review_post():
             'localname': localname_receive,
             'star': star_receive,
             'comment': comment_receive,
-            'image': image_receive,
+            'file': f'{filename}.{extension}',
             'username': user_info['username'],
             'address_x': x,
             'address_y': y
