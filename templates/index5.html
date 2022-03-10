@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <meta property="og:title" content="항해99 6기 9조"/>
-    <meta property="og:description" content="우리동네 빵집"/>
-    <meta property="og:image" content="이미지URL주소입력"/>
+    <meta property="og:title" content="동네빵집"/>
+    <meta property="og:description" content="일상을 달달하게"/>
+    <meta property="og:image"
+          content="https://i9.ytimg.com/vi_webp/Gw3yX0vOxrQ/mqdefault.webp?v=6229b591&sqp=CNzrppEG&rs=AOn4CLBjeCSs8DxII5cPV1Jc5DqSjYVmVw"/>
 
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
@@ -82,7 +83,6 @@
 
         #star {
             margin-top: 10px;
-            margin-bottom: 10px;
         }
 
         .card-image {
@@ -93,6 +93,7 @@
             padding: 10px;
             border-radius: 15px;
             margin-top: 10px;
+            margin: 10px auto 0px;
         }
 
         .card-body {
@@ -118,18 +119,7 @@
 
         .comment-box {
             width: 580px;
-        }
-
-        .wrap {
-            min-width: 800px;
-            width: 90%;
-            margin: auto;
-            height: auto;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            margin: 10px auto 20px;
         }
 
         #map {
@@ -137,6 +127,7 @@
             max-width: 85%;
             height: 400px;
             width: 600px;
+            margin: 10px auto 20px;
         }
 
 
@@ -219,21 +210,21 @@
         <a class="button is-primary is-buton is-remain" aria-label="logout"
            onclick="window.location.href='/'"> 목록으로 가기
         </a>
-        <h1 class="store" id="store"></h1>
-        <h4 id="localname"></h4>
+        <h1 class="store" id="store">어니언</h1>
+        <h4 id="localname">종로구</h4>
         <hr style="color: gray; width: 600px; margin: 0px auto;">
-        <h5 id="star"></h5>
+        <h5 id="star">&nbsp;⭐&nbsp;⭐&nbsp;⭐&nbsp;</h5>
         <hr style="color: gray; width: 600px; margin: 0px auto;">
         <div class="card-image">
             <figure class="image is-4by3">
                 <img id="file"
-                     src="#"
+                     src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAxMTlfMjk5%2FMDAxNjExMDYwMjM0NTM2.dVUHvmR32EwGlbw0yZjGnjsuNsNJ-J_RWTPhaGwkFYQg.3aHQ9iCnU6tDEttswXwSQLCFnp2_TpCM1EDdpAgg1VQg.JPEG.cocabobo%2F20210117%25A3%25DF122358.jpg&type=sc960_832"
                      alt="bread">
             </figure>
         </div>
         <div class="card-body">
             <span class="card-menu">추천메뉴</span>
-            <span class="card-text" id="menu"></span>
+            <span class="card-text" id="menu">${menu}</span>
         </div>
 
         <div class="comment-box">
@@ -242,7 +233,7 @@
         </div>
         <div id="map"></div>
         <div>
-            <hr style="color: gray; width: 600px;">
+            <hr style="color: gray; width: 600px; margin: 10px auto 15px;">
             <div class="user">
                 작성자: <span id="id"></span>
             </div>
